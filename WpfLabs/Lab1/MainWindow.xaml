@@ -1,0 +1,14 @@
+﻿<Window x:Class="Lab1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF calculator" Height="529" Width="464" FontSize="30" Background="White" Foreground="#777">
+    <DockPanel Margin="7">
+        <StackPanel DockPanel.Dock="Top">
+            <TextBox IsReadOnly="True" TextAlignment="Right"/>
+            <TextBox IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="48" Name="ResultBox"/>
+        </StackPanel>
+        <UniformGrid Name="AriphContainer" DockPanel.Dock="Right" Rows="4"/>
+        <UniformGrid Name="FuncContainer" DockPanel.Dock="Top" Rows="4"/>
+        <UniformGrid Name="ButtonContainer" Columns="3" />
+    </DockPanel>
+</Window>
