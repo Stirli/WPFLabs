@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1", "Lab1\Lab1.csproj", "{FCBEE400-99F2-4748-B143-BB10D9EA28BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalculatorv1", "MyCalculatorv1\MyCalculatorv1.csproj", "{A112C6C1-2AD5-40F2-94CA-41C274808827}"
 EndProject
 Global
@@ -11,10 +9,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FCBEE400-99F2-4748-B143-BB10D9EA28BF}.Debug|x86.ActiveCfg = Debug|x86
-		{FCBEE400-99F2-4748-B143-BB10D9EA28BF}.Debug|x86.Build.0 = Debug|x86
-		{FCBEE400-99F2-4748-B143-BB10D9EA28BF}.Release|x86.ActiveCfg = Release|x86
-		{FCBEE400-99F2-4748-B143-BB10D9EA28BF}.Release|x86.Build.0 = Release|x86
 		{A112C6C1-2AD5-40F2-94CA-41C274808827}.Debug|x86.ActiveCfg = Debug|x86
 		{A112C6C1-2AD5-40F2-94CA-41C274808827}.Debug|x86.Build.0 = Debug|x86
 		{A112C6C1-2AD5-40F2-94CA-41C274808827}.Release|x86.ActiveCfg = Release|x86

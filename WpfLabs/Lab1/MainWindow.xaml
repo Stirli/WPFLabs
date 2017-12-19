@@ -1,14 +1,102 @@
 ﻿<Window x:Class="Lab1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="WPF calculator" Height="529" Width="464" FontSize="30" Background="White" Foreground="#777">
+        mc:Ignorable="d" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        d:DesignHeight="550"
+        Title="WPF calculator" Name="win" FontSize="24" MinWidth="550" MinHeight="550" Width="550" Height="550"
+        >
+    <Window.Background>
+        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+    </Window.Background>
+    <Window.Foreground>
+        <SolidColorBrush Color="{x:Static SystemColors.WindowTextColor}"/>
+    </Window.Foreground>
     <DockPanel Margin="7">
-        <StackPanel DockPanel.Dock="Top">
-            <TextBox IsReadOnly="True" TextAlignment="Right"/>
-            <TextBox IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="48" Name="ResultBox"/>
-        </StackPanel>
-        <UniformGrid Name="AriphContainer" DockPanel.Dock="Right" Rows="4"/>
-        <UniformGrid Name="FuncContainer" DockPanel.Dock="Top" Rows="4"/>
-        <UniformGrid Name="ButtonContainer" Columns="3" />
+        <TextBox DockPanel.Dock="Top" Name="ExpressionBox" IsReadOnly="True" TextAlignment="Right"  BorderBrush="Transparent"  HorizontalScrollBarVisibility="Auto"/>
+        <TextBox DockPanel.Dock="Top" Name="CurrentValueBox" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="48" BorderBrush="Transparent"  HorizontalScrollBarVisibility="Visible" TextWrapping="NoWrap"/>
+        <TextBlock DockPanel.Dock="Top" Name="ModeBlock" TextAlignment="Right" FontSize="16" Text="DEG"/>
+        <UniformGrid DockPanel.Dock="Top" Name="FuncContainer" Columns="8">
+            <Button Content="√" Click="UnoOpButtonOnClick"/>
+            <Button Content=" 1&#x000A;&#x2014;&#x000A; x" Click="UnoOpButtonOnClick" HorizontalContentAlignment="Center" FontSize="18"/>
+            <Button Content="^2" Click="UnoOpButtonOnClick"/>
+            <Button Content="π" Click="UnoOpButtonOnClick"/>
+            <Button Content="sin" Click="UnoOpButtonOnClick"/>
+            <Button Content="cos" Click="UnoOpButtonOnClick"/>
+            <Button Content="tg" Click="UnoOpButtonOnClick"/>
+            <StackPanel>
+                <Button Content="DEG"  FontSize="16" Click="DegRadGradButtonOnClick"/>
+                <Button Content="RAD"  FontSize="16" Click="DegRadGradButtonOnClick"/>
+                <Button Content="GRAD" FontSize="16" Click="DegRadGradButtonOnClick"/>
+            </StackPanel>
+        </UniformGrid>
+        <UniformGrid Name="ButtonContainer" Rows="5" MinHeight="200" >
+            <Button Content="CE" Click="CleanCurrentButtonOnClick"/>
+            <Button Content="C" Click="ResetButtonOnClick"/>
+            <Button Content="&#x2190;" Click="BackspaceButtonOnClick"/>
+            <Button Content="+" Click="BinOpButtonOnClick" />
+            <Button Content="7" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="8" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="9" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="-" Click="BinOpButtonOnClick" />
+            <Button Content="4" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="5" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="6" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="*" Click="BinOpButtonOnClick" />
+            <Button Content="1" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="2" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="3" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="/" Click="BinOpButtonOnClick"/>
+            <Button Content="&#x00B1;" Click="NegateButtonOnClick"/>
+            <Button Content="0" Click="CipherButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                </Button.Background>
+            </Button>
+            <Button Content="," Click="DotButtonOnClick"/>
+            <Button Content="=" Click="ResultButtonOnClick">
+                <Button.Background>
+                    <SolidColorBrush Color="Coral"/>
+                </Button.Background>
+            </Button>
+        </UniformGrid>
+
     </DockPanel>
 </Window>
