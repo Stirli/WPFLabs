@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -20,77 +21,22 @@ namespace Lab1
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Указывает, нужно ли вводить число заново.
+        // Указывает, нужно ли вводить число заново. (после нажатия = или операции)
         private bool reset = true;
 
+        // Конструктор класса окна
         public MainWindow()
         {
             InitializeComponent();
+            // Получаем разделитель из региональных настроек системы
+            DecimalSeparatorButton.Content = CultureInfo.InstalledUICulture.NumberFormat.NumberDecimalSeparator;
         }
 
-        // Нажатие на + - * / %  sin cos tg
-        private void BinOpButtonOnClick(object sender, RoutedEventArgs e)
-        {
-            Button button = sender as Button;
-            ExpressionBox.Text = CurrentValueBox.Text + " " + button.Content;
-            reset = true;
-        }
-
-        private void UnoOpButtonOnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var oper = (sender as Button).Content.ToString();
-                double result;
-                if (oper.Equals("π"))
-                {
-                    result = Math.PI;
-                }
-                else
-                {
-                    double x = double.Parse(CurrentValueBox.Text);
-                    switch (oper)
-                    {
-                        case "sin":
-                            result = Math.Sin(WithCurrentMode(x));
-                            break;
-                        case "cos":
-                            result = Math.Cos(WithCurrentMode(x));
-                            break;
-                        case "tg":
-                            result = Math.Tan(WithCurrentMode(x));
-                            break;
-                        case "^2":
-                            result = x * x;
-                            break;
-                        case " 1\n—\n x":
-                            result = 1 / x;
-                            break;
-                        case "√":
-                            result = Math.Sqrt(x);
-                            if (double.IsNaN(result))
-                                throw new Exception("Невозможно вычислить корень из отрицательного числа.");
-                            break;
-                        default: throw new Exception((sender as Button).Content.ToString());
-                    }
-                }
-                CurrentValueBox.Text = result.ToString();
-                reset = true;
-            }
-            catch (FormatException ex)
-            {
-                CurrentValueBox.Text = string.IsNullOrEmpty(CurrentValueBox.Text) ? "Ошибка - пустая строка" : CurrentValueBox.Text + ":" + ex.Message;
-            }
-            catch (Exception ex)
-            {
-                CurrentValueBox.Text = ex.Message;
-            }
-        }
 
         // Переводит в радианы в зависимости от режима
         private double WithCurrentMode(double value)
         {
-            switch (ModeBlock.Text)
+            switch (ModeBlock.Content.ToString())
             {
                 case "DEG":
                     return Math.PI * value / 180.0;
@@ -98,40 +44,19 @@ namespace Lab1
                     return value;
                 case "GRAD":
                     return Math.PI * value / 200;
+                default:
+                    return double.NaN;
             }
-            return double.NaN;
         }
 
-
-        private void ResultButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+        private string DoubleToString(double d)
         {
-            if (ExpressionBox.Text.Length > 0)
-            {
-                char lastChar = ExpressionBox.Text.Last();
-                double op1 = double.Parse(ExpressionBox.Text.Split(' ').First());
-                double op2 = double.Parse(CurrentValueBox.Text);
-                double result = double.NaN;
-                ExpressionBox.Text += " " + CurrentValueBox.Text + " = ";
-                switch (lastChar)
-                {
-                    case '-':
-                        result = op1 - op2;
-                        break;
-                    case '+':
-                        result = op1 + op2;
-                        break;
-                    case '*':
-                        result = op1 * op2;
-                        break;
-                    case '/':
-                        result = op1 / op2;
-                        break;
-                }
-                CurrentValueBox.Text = result.ToString();
-                ExpressionBox.Text += result;
-            }
+            return d.ToString(CultureInfo.InstalledUICulture);
+        }
 
-            reset = true;
+        private double StringToDouble(string text)
+        {
+            return double.Parse(text, CultureInfo.InstalledUICulture);
         }
 
         // Числа
@@ -152,48 +77,193 @@ namespace Lab1
         // Нажатие на +/-
         private void NegateButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (CurrentValueBox.Text.Length > 0)
-                if (CurrentValueBox.Text.First() != '-')
-                {
-                    CurrentValueBox.Text = '-' + CurrentValueBox.Text;
-                }
-                else
-                {
-                    CurrentValueBox.Text = CurrentValueBox.Text.Substring(1, CurrentValueBox.Text.Length - 1);
-                }
+            if (CurrentValueBox.Text.Length == 0)
+            {
+                return;
+            }
+
+            if (CurrentValueBox.Text.First() != '-')
+            {
+                CurrentValueBox.Text = '-' + CurrentValueBox.Text;
+            }
+            else
+            {
+                CurrentValueBox.Text = CurrentValueBox.Text.Substring(1, CurrentValueBox.Text.Length - 1);
+            }
         }
 
         // Нажатие на десятичный разделитель
         private void DotButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (CurrentValueBox.Text.Contains(','))
+            if (CurrentValueBox.Text.Contains(CultureInfo.InstalledUICulture.NumberFormat.NumberDecimalSeparator))
                 return;
 
-            CurrentValueBox.Text += ',';
+            CurrentValueBox.Text += CultureInfo.InstalledUICulture.NumberFormat.NumberDecimalSeparator;
         }
 
+        // Очистка С
         private void CleanCurrentButtonOnClick(object sender, RoutedEventArgs e)
         {
             CurrentValueBox.Text = "0";
+            reset = true;
         }
 
+        // Очистка СЕ
         private void ResetButtonOnClick(object sender, RoutedEventArgs e)
         {
             CurrentValueBox.Text = "0";
             ExpressionBox.Text = string.Empty;
+            reset = true;
         }
 
+        // Удалить символ
         private void BackspaceButtonOnClick(object sender, RoutedEventArgs e)
         {
-            if (!reset)
+            if (reset)
             {
-                CurrentValueBox.Text = CurrentValueBox.Text.Length > 0 ? CurrentValueBox.Text.Substring(0, CurrentValueBox.Text.Length - 1) : "0";
+                return;
+            }
+
+            if (CurrentValueBox.Text.Length > 1)
+            {
+                CurrentValueBox.Text = CurrentValueBox.Text.Substring(0, CurrentValueBox.Text.Length - 1);
+            }
+            else
+            {
+                CurrentValueBox.Text = "0";
+                reset = true;
             }
         }
 
+        // Переключение DEG RAD GRAD
         private void DegRadGradButtonOnClick(object sender, RoutedEventArgs e)
         {
-            ModeBlock.Text = (sender as Button).Content.ToString();
+            ModeBlock.Content = (sender as Button).Content;
+        }
+
+
+        private void PiButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentValueBox.Text = DoubleToString(Math.PI);
+        }
+
+
+        // Нажатие на + - * / %  sin cos tg
+        private void BinOpButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            ExpressionBox.Text = CurrentValueBox.Text + " " + button.Content;
+            reset = true;
+        }
+
+        // унарные операции, изменяющие текущее число
+        private void UnoOpButtonOnClick(object sender, RoutedEventArgs e)
+        {
+            string error = null;
+            double result = double.NaN;
+            try
+            {
+                var oper = (sender as Button).Content.ToString();
+                double x = StringToDouble(CurrentValueBox.Text);
+                switch (oper)
+                {
+                    case "sin":
+                        result = Math.Sin(WithCurrentMode(x));
+                        break;
+                    case "cos":
+                        result = Math.Cos(WithCurrentMode(x));
+                        break;
+                    case "tg":
+                        x = WithCurrentMode(x);
+                        if (x != 0 && x % (1.5 * Math.PI) == 0 || x == (Math.PI / 2))
+                        {
+                            throw new ArgumentException("Тангенс не существует.");
+                        }
+
+                        result = Math.Tan(x);
+                        break;
+                    case "^2":
+                        result = x * x;
+                        break;
+                    case " 1\n—\n x":
+                        if (x == 0)
+                        {
+                            throw new DivideByZeroException();
+                        }
+
+                        result = 1 / x;
+                        break;
+                    case "√":
+                        result = Math.Sqrt(x);
+                        if (double.IsNaN(result))
+                            throw new Exception("Невозможно вычислить корень из отрицательного числа.");
+                        break;
+                    default: throw new Exception((sender as Button).Content.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            finally
+            {
+                CurrentValueBox.Text = error ?? DoubleToString(result);
+                reset = true;
+            }
+        }
+
+        private void ResultButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
+        {
+            string error = null;
+            double result = double.NaN;
+            try
+            {
+                if (ExpressionBox.Text.Length > 0)
+                {
+                    char lastChar = ExpressionBox.Text.Last();
+                    double op1 = StringToDouble(ExpressionBox.Text.Split(' ').First());
+                    double op2 = StringToDouble(CurrentValueBox.Text);
+                    switch (lastChar)
+                    {
+                        case '-':
+                            result = op1 - op2;
+                            break;
+                        case '+':
+                            result = op1 + op2;
+                            break;
+                        case '*':
+                            result = op1 * op2;
+                            break;
+                        case '/':
+                            if (op2 == 0)
+                            {
+                                throw new DivideByZeroException();
+                            }
+
+                            result = op1 / op2;
+                            break;
+                    }
+                }
+                else
+                {
+                    result = StringToDouble(CurrentValueBox.Text);
+                }
+                string expression = ExpressionBox.Text + " " + CurrentValueBox.Text + " = ";
+                ExpressionBox.Text = String.Empty;
+                CurrentValueBox.Text = DoubleToString(result);
+
+                JournalBox.Text += expression + DoubleToString(result) + "\n";
+            }
+            catch (Exception e)
+            {
+                error = e.Message;
+            }
+            finally
+            {
+                CurrentValueBox.Text = error ?? DoubleToString(result);
+                reset = true;
+            }
+
         }
     }
 }

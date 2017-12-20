@@ -5,98 +5,115 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         d:DesignHeight="550"
-        Title="WPF calculator" Name="win" FontSize="24" MinWidth="550" MinHeight="550" Width="550" Height="550"
-        >
+        Title="WPF calculator" Name="win" FontSize="24" MinWidth="450" MinHeight="550" Width="450" Height="550">
     <Window.Background>
         <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
     </Window.Background>
     <Window.Foreground>
         <SolidColorBrush Color="{x:Static SystemColors.WindowTextColor}"/>
     </Window.Foreground>
-    <DockPanel Margin="7">
-        <TextBox DockPanel.Dock="Top" Name="ExpressionBox" IsReadOnly="True" TextAlignment="Right"  BorderBrush="Transparent"  HorizontalScrollBarVisibility="Auto"/>
-        <TextBox DockPanel.Dock="Top" Name="CurrentValueBox" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" FontSize="48" BorderBrush="Transparent"  HorizontalScrollBarVisibility="Visible" TextWrapping="NoWrap"/>
-        <TextBlock DockPanel.Dock="Top" Name="ModeBlock" TextAlignment="Right" FontSize="16" Text="DEG"/>
-        <UniformGrid DockPanel.Dock="Top" Name="FuncContainer" Columns="8">
-            <Button Content="√" Click="UnoOpButtonOnClick"/>
-            <Button Content=" 1&#x000A;&#x2014;&#x000A; x" Click="UnoOpButtonOnClick" HorizontalContentAlignment="Center" FontSize="18"/>
-            <Button Content="^2" Click="UnoOpButtonOnClick"/>
-            <Button Content="π" Click="UnoOpButtonOnClick"/>
-            <Button Content="sin" Click="UnoOpButtonOnClick"/>
-            <Button Content="cos" Click="UnoOpButtonOnClick"/>
-            <Button Content="tg" Click="UnoOpButtonOnClick"/>
-            <StackPanel>
-                <Button Content="DEG"  FontSize="16" Click="DegRadGradButtonOnClick"/>
-                <Button Content="RAD"  FontSize="16" Click="DegRadGradButtonOnClick"/>
-                <Button Content="GRAD" FontSize="16" Click="DegRadGradButtonOnClick"/>
-            </StackPanel>
-        </UniformGrid>
-        <UniformGrid Name="ButtonContainer" Rows="5" MinHeight="200" >
-            <Button Content="CE" Click="CleanCurrentButtonOnClick"/>
-            <Button Content="C" Click="ResetButtonOnClick"/>
-            <Button Content="&#x2190;" Click="BackspaceButtonOnClick"/>
-            <Button Content="+" Click="BinOpButtonOnClick" />
-            <Button Content="7" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="8" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="9" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="-" Click="BinOpButtonOnClick" />
-            <Button Content="4" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="5" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="6" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="*" Click="BinOpButtonOnClick" />
-            <Button Content="1" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="2" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="3" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="/" Click="BinOpButtonOnClick"/>
-            <Button Content="&#x00B1;" Click="NegateButtonOnClick"/>
-            <Button Content="0" Click="CipherButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                </Button.Background>
-            </Button>
-            <Button Content="," Click="DotButtonOnClick"/>
-            <Button Content="=" Click="ResultButtonOnClick">
-                <Button.Background>
-                    <SolidColorBrush Color="Coral"/>
-                </Button.Background>
-            </Button>
-        </UniformGrid>
-
-    </DockPanel>
+    <Grid Margin="7">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="310" Width="*"/>
+            <ColumnDefinition MinWidth="100" Width="*"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="0" Width="5" Background="Black"
+                      VerticalAlignment="Stretch" HorizontalAlignment="Right"/>
+        <TextBox  Grid.Column="1" Name="JournalBox" Margin="4 0 0 0" TextWrapping="Wrap"/>
+        <DockPanel Grid.Column="0" Margin=" 0 0 8 0">
+            <TextBox DockPanel.Dock="Top" Name="ExpressionBox" IsReadOnly="True" TextAlignment="Right" HorizontalScrollBarVisibility="Auto">
+                <TextBox.Foreground>White</TextBox.Foreground>
+                <TextBox.Background>#FF030303</TextBox.Background>
+            </TextBox>
+            <TextBox DockPanel.Dock="Top" Name="CurrentValueBox" Text="0" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" HorizontalScrollBarVisibility="Auto">
+                <TextBox.Foreground>White</TextBox.Foreground>
+                <TextBox.Background>#FF030303</TextBox.Background>
+            </TextBox>
+            <Label DockPanel.Dock="Top" Name="ModeBlock" HorizontalContentAlignment="Right" FontSize="16" Content="DEG">
+                <Label.BorderBrush>
+                    <SolidColorBrush Color="Black"/>
+                </Label.BorderBrush>
+            </Label>
+            <UniformGrid DockPanel.Dock="Top" Name="FuncContainer" Columns="8">
+                <Button Content="√" Click="UnoOpButtonOnClick"/>
+                <Button Content=" 1&#x000A;&#x2014;&#x000A; x" Click="UnoOpButtonOnClick" HorizontalContentAlignment="Center" FontSize="18"/>
+                <Button Content="^2" Click="UnoOpButtonOnClick"/>
+                <Button Content="π" Click="PiButtonOnClick"/>
+                <Button Content="sin" Click="UnoOpButtonOnClick"/>
+                <Button Content="cos" Click="UnoOpButtonOnClick"/>
+                <Button Content="tg" Click="UnoOpButtonOnClick"/>
+                <StackPanel>
+                    <Button Content="DEG"  FontSize="16" Click="DegRadGradButtonOnClick"/>
+                    <Button Content="RAD"  FontSize="16" Click="DegRadGradButtonOnClick"/>
+                    <Button Content="GRAD" FontSize="16" Click="DegRadGradButtonOnClick"/>
+                </StackPanel>
+            </UniformGrid>
+            <UniformGrid Name="ButtonContainer" Rows="5">
+                <Button Content="CE" Click="CleanCurrentButtonOnClick"/>
+                <Button Content="C" Click="ResetButtonOnClick"/>
+                <Button Content="&#x2190;" Click="BackspaceButtonOnClick"/>
+                <Button Content="+" Click="BinOpButtonOnClick" />
+                <Button Content="7" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="8" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="9" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="-" Click="BinOpButtonOnClick" />
+                <Button Content="4" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="5" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="6" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="*" Click="BinOpButtonOnClick" />
+                <Button Content="1" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="2" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="3" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Content="/" Click="BinOpButtonOnClick"/>
+                <Button Content="&#x00B1;" Click="NegateButtonOnClick"/>
+                <Button Content="0" Click="CipherButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
+                    </Button.Background>
+                </Button>
+                <Button Name="DecimalSeparatorButton" Click="DotButtonOnClick"/>
+                <Button Content="=" Click="ResultButtonOnClick">
+                    <Button.Background>
+                        <SolidColorBrush Color="Coral"/>
+                    </Button.Background>
+                </Button>
+            </UniformGrid>
+        </DockPanel>
+    </Grid>
 </Window>
