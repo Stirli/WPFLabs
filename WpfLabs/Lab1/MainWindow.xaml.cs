@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Lab1
 {
@@ -21,7 +12,7 @@ namespace Lab1
     /// </summary>
     public partial class MainWindow : Window
     {
-        // Указывает, нужно ли вводить число заново. (после нажатия = или операции)
+        // Указывает, нужно ли вводить число заново. (после нажатия '=' или '+-/*...')
         private bool reset = true;
 
         // Конструктор класса окна
@@ -31,7 +22,7 @@ namespace Lab1
             // Получаем разделитель из региональных настроек системы
             DecimalSeparatorButton.Content = CultureInfo.InstalledUICulture.NumberFormat.NumberDecimalSeparator;
         }
-
+      
 
         // Переводит в радианы в зависимости от режима
         private double WithCurrentMode(double value)
@@ -49,11 +40,13 @@ namespace Lab1
             }
         }
 
+        // Преобразует double в строку с учетом региональных параметров.
         private string DoubleToString(double d)
         {
-            return d.ToString(CultureInfo.InstalledUICulture);
+            return d.ToString("0.#####", CultureInfo.InstalledUICulture);
         }
 
+        // Преобразует строку в double с учетом региональных параметров.
         private double StringToDouble(string text)
         {
             return double.Parse(text, CultureInfo.InstalledUICulture);
@@ -151,20 +144,30 @@ namespace Lab1
         // Нажатие на + - * / %  sin cos tg
         private void BinOpButtonOnClick(object sender, RoutedEventArgs e)
         {
-            Button button = sender as Button;
-            ExpressionBox.Text = CurrentValueBox.Text + " " + button.Content;
-            reset = true;
+            try
+            {
+                Calculate();
+                Button button = sender as Button;
+                ExpressionBox.Text = CurrentValueBox.Text + " " + button.Content;
+            }
+            catch (Exception ex)
+            {
+                CurrentValueBox.Text = ex.Message;
+            }
+            finally
+            {
+                reset = true;
+            }
         }
 
         // унарные операции, изменяющие текущее число
         private void UnoOpButtonOnClick(object sender, RoutedEventArgs e)
         {
-            string error = null;
-            double result = double.NaN;
             try
             {
                 var oper = (sender as Button).Content.ToString();
                 double x = StringToDouble(CurrentValueBox.Text);
+                double result;
                 switch (oper)
                 {
                     case "sin":
@@ -200,70 +203,70 @@ namespace Lab1
                         break;
                     default: throw new Exception((sender as Button).Content.ToString());
                 }
+                CurrentValueBox.Text = DoubleToString(result);
             }
             catch (Exception ex)
             {
-                error = ex.Message;
+                CurrentValueBox.Text = ex.Message;
             }
             finally
             {
-                CurrentValueBox.Text = error ?? DoubleToString(result);
                 reset = true;
             }
         }
 
         private void ResultButtonOnClick(object sender, RoutedEventArgs routedEventArgs)
         {
-            string error = null;
-            double result = double.NaN;
             try
             {
-                if (ExpressionBox.Text.Length > 0)
-                {
-                    char lastChar = ExpressionBox.Text.Last();
-                    double op1 = StringToDouble(ExpressionBox.Text.Split(' ').First());
-                    double op2 = StringToDouble(CurrentValueBox.Text);
-                    switch (lastChar)
-                    {
-                        case '-':
-                            result = op1 - op2;
-                            break;
-                        case '+':
-                            result = op1 + op2;
-                            break;
-                        case '*':
-                            result = op1 * op2;
-                            break;
-                        case '/':
-                            if (op2 == 0)
-                            {
-                                throw new DivideByZeroException();
-                            }
-
-                            result = op1 / op2;
-                            break;
-                    }
-                }
-                else
-                {
-                    result = StringToDouble(CurrentValueBox.Text);
-                }
-                string expression = ExpressionBox.Text + " " + CurrentValueBox.Text + " = ";
-                ExpressionBox.Text = String.Empty;
-                CurrentValueBox.Text = DoubleToString(result);
-
-                JournalBox.Text += expression + DoubleToString(result) + "\n";
+                Calculate();
             }
             catch (Exception e)
             {
-                error = e.Message;
+                CurrentValueBox.Text = e.Message;
             }
             finally
             {
-                CurrentValueBox.Text = error ?? DoubleToString(result);
                 reset = true;
             }
+        }
 
+        private void Calculate()
+        {
+            double result = double.NaN;
+            if (ExpressionBox.Text.Length > 0)
+            {
+                char lastChar = ExpressionBox.Text.Last();
+                double op1 = StringToDouble(ExpressionBox.Text.Split(' ').First());
+                double op2 = StringToDouble(CurrentValueBox.Text);
+                switch (lastChar)
+                {
+                    case '-':
+                        result = op1 - op2;
+                        break;
+                    case '+':
+                        result = op1 + op2;
+                        break;
+                    case '*':
+                        result = op1 * op2;
+                        break;
+                    case '/':
+                        if (op2 == 0)
+                        {
+                            throw new DivideByZeroException();
+                        }
+
+                        result = op1 / op2;
+                        break;
+                }
+                string expression = ExpressionBox.Text + " " + CurrentValueBox.Text + " = ";
+                string resultString = DoubleToString(result);
+                ExpressionBox.Text = String.Empty;
+                CurrentValueBox.Text = resultString;
+
+                JournalBox.Text = expression + resultString + "\n" + JournalBox.Text;
+                CurrentValueBox.Text = resultString;
+            }
         }
     }
 }
