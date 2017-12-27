@@ -28,48 +28,57 @@ namespace Lab2
 
         private void NoButton_OnMouse(object sender, MouseEventArgs e)
         {
-            Button button = (Button)sender;
-            FrameworkElement parent = (FrameworkElement)button.Parent;
-            Point mousePositionOnButton = e.GetPosition(button);
-            double bx = mousePositionOnButton.X;
-            double by = mousePositionOnButton.Y;
+            FrameworkElement element = (FrameworkElement)sender;
+            // координаты курсора относительно "кнопки"
+            Point mousePositionOnElement = e.GetPosition(element);
+            FrameworkElement parent = (FrameworkElement)element.Parent;
+            // координаты относительно родительского контейнера
+            Point mousePositionOnParent = e.GetPosition(parent);
+            double bx = mousePositionOnElement.X;
+            double by = mousePositionOnElement.Y;
+            double px = mousePositionOnParent.X;
+            double py = mousePositionOnParent.Y;
+            double height = element.ActualHeight;
+            double width = element.ActualWidth;
 
-            double delta = 5;
+            double delta = 20;
 
-            double left = bx < button.Width / 2
-                ? button.Margin.Left + bx + delta
-                : button.Margin.Left - (button.Width - bx) - delta;
+            double left = element.Margin.Left;
+            double top = element.Margin.Top;
 
-            if (left < 0)
+            if (by < height / 4)
             {
-                left = parent.ActualWidth - button.ActualWidth;
+                top = py + delta;
             }
-            else
-            if (left + button.ActualWidth >= parent.ActualWidth)
+            else if (by >= height * 3 / 4)
             {
-                left = 0;
+                top = py - height - delta;
+            }
+            else if (bx < width / 2)
+            {
+                left = px + delta;
+            }
+            else if (bx >= width / 2)
+            {
+                left = px - width - delta;
             }
 
-            double top = by < button.ActualHeight / 2
-                ? button.Margin.Top + by + delta
-                : button.Margin.Top - (button.ActualHeight - by) - delta;
+            if (top < 0) top = parent.ActualHeight - height;
+            if (top + height > parent.ActualHeight) top = 0;
+            if (left < 0) left = parent.ActualWidth - width;
+            if (left + width > parent.ActualWidth) left = 0;
 
-            if (top < 0)
-            {
-                top = parent.ActualHeight - button.ActualHeight;
-            }
-            else
-            if (top + button.ActualHeight >= parent.ActualHeight)
-            {
-                top = 0;
-            }
-
-            button.Margin = new Thickness(left, top, button.Margin.Right, button.Margin.Bottom);
+            element.Margin = new Thickness(left, top, element.Margin.Right, element.Margin.Bottom);
         }
 
         private void YesButton_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException("СООБЩЕНИЕ");
+            MessageText.Text = "Ну и живи теперь с этим.";
+        }
+
+        private void NoButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageText.Text = "¯\\_(ツ)_/¯";
         }
     }
 }

@@ -7,9 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" ResizeMode="NoResize" >
     <Grid>
+        <Label Content="Вы довольны своей зарплатой?" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="64,48,346,0"/>
+        <TextBox Name="MessageText" VerticalAlignment="Top" Margin="317,56,97,0"/>
         <Button Content="Да" Width="90" Height="36" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="70,174,0,0" Click="YesButton_OnClick"/>
-        <Border Margin="173,88,7,7" MinWidth="180" BorderBrush="Red" BorderThickness="5" Background="Aqua">
-            <Button Content="Нет" MouseMove="NoButton_OnMouse" Width="90" Height="36"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="93,82,0,0"/>
+        <Border Margin="173,88,7,7" MinWidth="180">
+            <Button Content="Нет" MouseEnter="NoButton_OnMouse" MouseMove="NoButton_OnMouse" Width="90" Height="36"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="188,89,0,0" Click="NoButton_Click"/>
         </Border>
     </Grid>
 </Window>
