@@ -4,7 +4,7 @@
         mc:Ignorable="d" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="WPF calculator" FontSize="24" Width="550" Height="580" ResizeMode="NoResize" >
+        Title="WPF calculator" FontSize="24" Width="338" Height="580" ResizeMode="NoResize" >
     <Window.Background>
         <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
     </Window.Background>
@@ -12,13 +12,9 @@
         <SolidColorBrush Color="{x:Static SystemColors.WindowTextColor}"/>
     </Window.Foreground>
     <Grid Margin="7">
-        <TextBox  Name="JournalBox" Width="208" TextWrapping="Wrap" IsReadOnly="True" HorizontalAlignment="Right"/>
         <Grid Width="300" HorizontalAlignment="Left">
-            <TextBox Name="ExpressionBox"  FontFamily="./#DS-Digital, Consolas" IsReadOnly="True" TextAlignment="Right" HorizontalScrollBarVisibility="Auto"
-                     Foreground="White" Background="#FF030303"  VerticalAlignment="Top" Height="48" Margin="0,6,0,0">
-            </TextBox>
-            <TextBox  Name="CurrentValueBox" FontFamily="./#DS-Digital, Consolas" FontSize="48" Text="0" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" HorizontalScrollBarVisibility="Auto"
-                     Foreground="White" Background="#FF030303" Margin="0,53,0,0" VerticalAlignment="Top">
+            <TextBox  Name="CurrentValueBox" FontFamily="./#DS-Digital, Consolas" FontSize="36" Text="0" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" HorizontalScrollBarVisibility="Auto"
+                     Foreground="White" Background="#FF030303" Margin="0,6,0,0" VerticalAlignment="Top" Height="89">
             </TextBox>
             <UniformGrid Name="FuncContainer" Columns="8" Margin="0,0,0,340" VerticalAlignment="Bottom">
                 <Button Content="√" Click="UnoOpButtonOnClick"/>
