@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCalculatorv1", "MyCalcula
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2", "Lab2\Lab2.csproj", "{27E82A11-A479-44CF-A6D4-8A9C23B121C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4", "Lab4\Lab4.csproj", "{48B3536B-5218-4BAB-B30F-C94F4A5FD689}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -25,6 +27,10 @@ Global
 		{27E82A11-A479-44CF-A6D4-8A9C23B121C7}.Debug|x86.Build.0 = Debug|x86
 		{27E82A11-A479-44CF-A6D4-8A9C23B121C7}.Release|x86.ActiveCfg = Release|x86
 		{27E82A11-A479-44CF-A6D4-8A9C23B121C7}.Release|x86.Build.0 = Release|x86
+		{48B3536B-5218-4BAB-B30F-C94F4A5FD689}.Debug|x86.ActiveCfg = Debug|x86
+		{48B3536B-5218-4BAB-B30F-C94F4A5FD689}.Debug|x86.Build.0 = Debug|x86
+		{48B3536B-5218-4BAB-B30F-C94F4A5FD689}.Release|x86.ActiveCfg = Release|x86
+		{48B3536B-5218-4BAB-B30F-C94F4A5FD689}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
