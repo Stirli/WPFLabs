@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>af552f0b-73e2-44fd-b072-6bc799d617d7</ProjectGuid>
+    <ProjectGuid>{16DB8A9B-6511-4CF3-BDB3-48AD2D5B4990}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lab4GameControl</RootNamespace>
