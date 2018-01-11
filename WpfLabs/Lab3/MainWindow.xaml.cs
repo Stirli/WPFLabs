@@ -25,11 +25,12 @@ namespace Lab3
             InitializeComponent();
             values = new Values()
             {
-                XStart = 1,
                 XStop = 3,
+                XStart = 1,
                 Step = .1,
                 N = 3
             };
+
             this.DataContext = values;
         }
 

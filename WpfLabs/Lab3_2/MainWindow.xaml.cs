@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -19,15 +20,23 @@ namespace Lab3_2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Info _dc;
+
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new Info();
+            _dc = new Info();
+            DataContext = _dc;
         }
 
         private void SaveOnClick(object sender, RoutedEventArgs e)
         {
-            
+            File.WriteAllLines("employees.txt", _dc.Employees);
+        }
+
+        private void AddOnClick(object sender, RoutedEventArgs e)
+        {
+            _dc.Employees.Add(_dc);
         }
     }
 }
