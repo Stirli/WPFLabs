@@ -23,5 +23,15 @@ namespace Lab4
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            BomberPlane.Update();
+        }
+
+        private void Filre_Button_Click(object sender, RoutedEventArgs e)
+        {
+            BomberPlane.OnFire();
+        }
     }
 }
