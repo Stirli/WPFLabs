@@ -70,7 +70,7 @@ namespace Lab1
 
         private string Process(string text)
         {
-            Regex mainReg = new Regex(@"(?<op1>-?\d+,\d+|-?\d+)" + @"(?<func>[\+\-\*\/])" + @"(?<op2>-?\d+,\d+|-?\d+)");
+            Regex mainReg = new Regex(@"^(?<op1>-?\d+,\d+|-?\d+)" + @"(?<func>[\+\-\*\/])" + @"(?<op2>-?\d+,\d+|-?\d+)$");
             Match match = mainReg.Match(text);
             if (match.Success)
             {

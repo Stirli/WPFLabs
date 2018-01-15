@@ -4,99 +4,87 @@
         mc:Ignorable="d" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        Title="WPF calculator" FontSize="24" Width="338" Height="580" ResizeMode="NoResize" >
+        Title="WPF calculator" FontSize="24" Width="280" Height="607" ResizeMode="NoResize">
     <Window.Background>
         <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
     </Window.Background>
     <Window.Foreground>
         <SolidColorBrush Color="{x:Static SystemColors.WindowTextColor}"/>
     </Window.Foreground>
-    <Grid Margin="7">
-        <Grid Width="300" HorizontalAlignment="Left">
-            <TextBox  Name="CurrentValueBox" FontFamily="./#DS-Digital, Consolas" FontSize="36" Text="0" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" HorizontalScrollBarVisibility="Auto"
-                     Foreground="White" Background="#FF030303" Margin="0,6,0,0" VerticalAlignment="Top" Height="89">
-            </TextBox>
-            <UniformGrid Name="FuncContainer" Columns="8" Margin="0,0,0,340" VerticalAlignment="Bottom">
-                <Button Content="√" Click="UnoOpButtonOnClick"/>
-                <Button Content=" 1&#x000A;&#x2014;&#x000A; x" Click="UnoOpButtonOnClick" HorizontalContentAlignment="Center" FontSize="14"/>
-                <Button Content="^2" Click="UnoOpButtonOnClick"/>
-                <Button Content="π" Click="PiButtonOnClick"/>
-                <Button Content="sin" Click="UnoOpButtonOnClick"/>
-                <Button Content="cos" Click="UnoOpButtonOnClick"/>
-                <Button Content="tg" Click="UnoOpButtonOnClick"/>
-                <StackPanel>
-                    <Button Content="DEG"  FontSize="12" Click="DegRadGradButtonOnClick"/>
-                    <Button Content="RAD"  FontSize="12" Click="DegRadGradButtonOnClick"/>
-                    <Button Content="GRAD" FontSize="12" Click="DegRadGradButtonOnClick"/>
-                </StackPanel>
-            </UniformGrid>
-            <UniformGrid Name="ButtonContainer" Rows="5" VerticalAlignment="Bottom" Height="340">
-                <Button Content="CE" Click="CleanCurrentButtonOnClick"/>
-                <Button Content="C" Click="ResetButtonOnClick"/>
-                <Button Content="&#x2190;" Click="BackspaceButtonOnClick"/>
-                <Button Content="+" Click="BinOpButtonOnClick" />
-                <Button Content="7" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="8" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="9" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="-" Click="BinOpButtonOnClick" />
-                <Button Content="4" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="5" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="6" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="*" Click="BinOpButtonOnClick" />
-                <Button Content="1" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="2" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="3" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Content="/" Click="BinOpButtonOnClick"/>
-                <Button Content="&#x00B1;" Click="NegateButtonOnClick"/>
-                <Button Content="0" Click="CipherButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="{x:Static SystemColors.WindowColor}"/>
-                    </Button.Background>
-                </Button>
-                <Button Name="DecimalSeparatorButton" Click="DotButtonOnClick"/>
-                <Button Content="=" Click="ResultButtonOnClick">
-                    <Button.Background>
-                        <SolidColorBrush Color="Coral"/>
-                    </Button.Background>
-                </Button>
-            </UniformGrid>
-            <Label Name="ModeBlock" HorizontalContentAlignment="Right" FontSize="16" Content="DEG" BorderBrush="Black" VerticalAlignment="Top" Margin="0,101,0,0" />
-        </Grid>
+    <Grid  Width="260">
+        <TextBox  Name="CurrentValueBox" FontFamily="./#DS-Digital, Consolas" FontSize="48" Text="0" IsReadOnly="True" TextAlignment="Right" FontWeight="Bold" HorizontalScrollBarVisibility="Auto"
+                     Foreground="White" Background="#FF030303" VerticalAlignment="Top" Height="70" Margin="0,5,0,0">
+        </TextBox>
+        <Label Name="ModeBlock" HorizontalContentAlignment="Right" FontSize="16" Content="DEG" BorderBrush="Black" VerticalAlignment="Top" Margin="0,73,0,0" Height="30" />
+        <Button Width="60" Height="20"  HorizontalAlignment="Left" VerticalAlignment="Top" Content="DEG" FontSize="8" Click="DegRadGradButtonOnClick" Margin="198,109,0,0" />
+        <Button Width="60" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top" Content="RAD" FontSize="8" Click="DegRadGradButtonOnClick" Margin="198,129,0,0" />
+        <Button Width="60" Height="20"  HorizontalAlignment="Left" VerticalAlignment="Top" Content="GRAD" FontSize="8" Click="DegRadGradButtonOnClick" Margin="198,149,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="√" Click="UnoOpButtonOnClick" Margin="66,175,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content=" 1&#x000A;&#x2014;&#x000A; x" Click="UnoOpButtonOnClick" HorizontalContentAlignment="Center" Margin="0,175,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="^2" Click="UnoOpButtonOnClick" Margin="132,175,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="π" Click="PiButtonOnClick" Margin="198,175,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="sin" Click="UnoOpButtonOnClick" Margin="0,109,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="cos" Click="UnoOpButtonOnClick" Margin="66,109,0,0" />
+        <Button FontSize="14" Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="tg" Click="UnoOpButtonOnClick" Margin="132,109,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="CE" Click="CleanCurrentButtonOnClick" Margin="0,241,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="C" Click="ResetButtonOnClick" Margin="66,241,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="&#x2190;" Click="BackspaceButtonOnClick" Margin="132,241,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="+" Click="BinOpButtonOnClick" Margin="198,241,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="7" Click="CipherButtonOnClick" Margin="0,307,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="8" Click="CipherButtonOnClick" Margin="66,307,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="9" Click="CipherButtonOnClick" Margin="132,307,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="-" Click="BinOpButtonOnClick" Margin="198,307,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="4" Click="CipherButtonOnClick" Margin="132,373,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="5" Click="CipherButtonOnClick" Margin="66,373,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="6" Click="CipherButtonOnClick" Margin="0,373,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="*" Click="BinOpButtonOnClick" Margin="198,373,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="1" Click="CipherButtonOnClick" Margin="0,439,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="2" Click="CipherButtonOnClick" Margin="66,439,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="3" Click="CipherButtonOnClick" Margin="132,439,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="/" Click="BinOpButtonOnClick" Margin="198,439,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="&#x00B1;" Click="NegateButtonOnClick" Margin="0,505,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="0" Click="CipherButtonOnClick" Margin="66,505,0,0">
+            <Button.Background>
+                <SolidColorBrush Color="{x:Static SystemColors.WindowColor}" />
+            </Button.Background>
+        </Button>
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Name="DecimalSeparatorButton" Click="DotButtonOnClick" Margin="132,505,0,0" />
+        <Button Width="60" Height="60" HorizontalAlignment="Left" VerticalAlignment="Top" Content="=" Click="ResultButtonOnClick" Background="Coral" Margin="198,505,0,0"/>
     </Grid>
 </Window>
