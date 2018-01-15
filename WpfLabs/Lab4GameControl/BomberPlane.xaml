@@ -7,12 +7,9 @@
              mc:Ignorable="d" 
              Width="1280" Height="720">
     <UserControl.Resources>
-       
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
     </UserControl.Resources>
-    <Canvas>
-        <Image Source="pack://application:,,,/Lab4GameControl;component/Assets/desert-4682.jpg" Width="1545" Canvas.Bottom="0"></Image>
-        <Image Name="Image" Source="{Binding Bomber.Image}" Width="300" Height="100" Canvas.Top="{Binding Bomber.Y}" Canvas.Left="{Binding Bomber.X}"/>
-        <Image Source="{Binding Bomb.Image}" Width="30" Canvas.Top="{Binding Bomb.Y}" Canvas.Left="{Binding Bomb.X}" Visibility="{Binding Path=Bomb.IsVisible, Converter={StaticResource BooleanToVisibilityConverter1}}"  />
+    <Canvas Name="gameArea">
+        <Image Source="pack://application:,,,/Lab4GameControl;component/Assets/desert-4682.jpg" Width="1545" Canvas.Bottom="0"/>
+        <Image Name="Target" Source="pack://application:,,,/Lab4GameControl;component/Assets/target.png" Height="100" Canvas.Left="932" Canvas.Top="564" MouseDown="Image_OnMouseDown"/>
     </Canvas>
 </UserControl>

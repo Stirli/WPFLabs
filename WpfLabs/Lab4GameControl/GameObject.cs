@@ -38,6 +38,7 @@ namespace Lab4GameControl
             }
         }
 
+        public virtual string Name { get; set; }
         public BitmapSource Image
         {
             get { return _image; }
@@ -56,19 +57,12 @@ namespace Lab4GameControl
             {
                 if (value == _isVisible) return;
                 _isVisible = value;
-                if (!IsVisible)
-                    OnHide();
                 OnPropertyChanged("IsVisible");
             }
         }
 
         public abstract void Update();
-
-        public virtual void OnHide()
-        {
-
-        }
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -79,13 +73,16 @@ namespace Lab4GameControl
         }
     }
 
-    public class Airplane : GameObject
+    public class Bomber : GameObject
     {
         public GameObject Bomb { get; set; }
 
-        public Airplane()
+        public Bomber()
         {
+            IsVisible = true;
         }
+
+        public override string Name { get { return "Bomber"; } }
 
         public override void Update()
         {
@@ -107,12 +104,13 @@ namespace Lab4GameControl
     public class Bomb : GameObject
     {
         private double y = 0.5;
+        public override string Name { get { return "Bomb"; } }
         public override void Update()
         {
             if (IsVisible)
             {
                 X += 1;
-                Y += (int)(y+=0.05);
+                Y += (int)(y += 0.05);
             }
             if (Y > 600)
             {
@@ -121,9 +119,9 @@ namespace Lab4GameControl
             }
         }
 
-        public override void OnHide()
+        public void OnDestroyed()
         {
-
+            
         }
     }
 }

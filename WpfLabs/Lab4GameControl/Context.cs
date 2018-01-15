@@ -16,31 +16,16 @@ namespace Lab4GameControl
             GameObjects = new List<GameObject>
             {
                 (Bomb = new Bomb { Y = 20}),
-                (Bomber = new Airplane { Y = 20, Bomb = Bomb}),
+                (Bomber = new Bomber { Y = 20, Bomb = Bomb}),
             };
         }
 
-        private List<GameObject> GameObjects;
+        public List<GameObject> GameObjects { get; set; }
 
         public bool IsReady { get; set; }
 
-        public void Update()
-        {
-            Task.Factory.StartNew(() =>
-              {
-                  while (true)
-                  {
-                      foreach (GameObject o in GameObjects)
-                      {
-
-                          o.Update();
-                      }
-                      Thread.Sleep(10);
-                  }
-              });
-        }
-
-        public Airplane Bomber { get; set; }
+       
+        public Bomber Bomber { get; set; }
         public Bomb Bomb { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
 
