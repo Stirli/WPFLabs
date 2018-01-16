@@ -4,10 +4,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using Lab3.Annotations;
 
 namespace Lab3
 {
-    public class Values
+    public class Values:INotifyPropertyChanged
     {
         private double _xStop;
         private double _xStart;
@@ -25,6 +26,8 @@ namespace Lab3
                 if (value > XStop)
                     throw new ArgumentException("Конечное значение меньше начального.");
                 _xStart = value;
+                OnPropertyChanged("XStart");
+                OnPropertyChanged("XStop");
             }
         }
 
@@ -36,6 +39,8 @@ namespace Lab3
                 if (value < XStart)
                     throw new ArgumentException("Конечное значение меньше начального.");
                 _xStop = value;
+                OnPropertyChanged("XStart");
+                OnPropertyChanged("XStop");
             }
         }
 
@@ -66,6 +71,15 @@ namespace Lab3
         public Values()
         {
             Results = new ObservableCollection<string>();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

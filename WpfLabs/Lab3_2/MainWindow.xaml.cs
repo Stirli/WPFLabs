@@ -36,7 +36,28 @@ namespace Lab3_2
 
         private void AddOnClick(object sender, RoutedEventArgs e)
         {
-            _dc.Employees.Add(_dc);
+            string error = string.Empty;
+            foreach (FrameworkElement child in Container.Children)
+            {
+                BindingExpression bindingExpression = child.GetBindingExpression(TextBox.TextProperty) ?? child.GetBindingExpression(ComboBox.TextProperty);
+                if (bindingExpression != null)
+                {
+                    bindingExpression.UpdateSource();
+                    if (Validation.GetHasError(child))
+                    {
+                        error = Validation.GetErrors(child)[0].Exception.Message;
+                        break;
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(error))
+            {
+                _dc.Employees.Add(_dc);
+            }
+            else
+            {
+                MessageBox.Show(this, error, "Проверка данных", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

@@ -9,10 +9,11 @@ namespace Lab3_2
     class Info
     {
         private double _salary;
-        private string _lastName;
-        private string _position;
-        private string _city;
-        private string _street;
+        private string _lastName = String.Empty;
+        private string _position = String.Empty;
+        private string _city = String.Empty;
+        private string _street = String.Empty;
+        private int _houseNumber;
 
         public string LastName
         {
@@ -69,7 +70,16 @@ namespace Lab3_2
             }
         }
 
-        public int HouseNumber { get; set; }
+        public int HouseNumber
+        {
+            get { return _houseNumber; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentException("Номер дома должен быть больше 0"); 
+                _houseNumber = value;
+            }
+        }
 
         public ObservableCollection<string> Positions { get; set; }
         public ObservableCollection<string> Cities { get; set; }

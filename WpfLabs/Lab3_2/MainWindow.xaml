@@ -4,12 +4,10 @@
     xmlns:lab32="clr-namespace:Lab3_2"
     Title="MainWindow" Height="350" Width="520">
     <Window.Resources>
-        <Style TargetType="{x:Type TextBox}">
+        <Style TargetType="{x:Type FrameworkElement}">
             <Style.Triggers>
                 <Trigger Property="Validation.HasError" Value="true">
-                    <Setter Property="ToolTip"
-              Value="{Binding RelativeSource={x:Static RelativeSource.Self},Path=(Validation.Errors)[0].ErrorContent}" />
-                    <Setter Property="Background" Value="Pink"/>
+                    <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self},Path=(Validation.Errors)[0].ErrorContent}" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -18,7 +16,7 @@
                 <Border BorderThickness="2" BorderBrush="Red">
                     <AdornedElementPlaceholder></AdornedElementPlaceholder>
                 </Border>
-                <TextBlock Foreground="Red" FontSize="24">*</TextBlock>
+                <TextBlock Foreground="Red" FontSize="24"  ToolTip="{Binding Validation.}">*</TextBlock>
             </StackPanel>
         </ControlTemplate>
     </Window.Resources>
@@ -34,9 +32,9 @@
         <StackPanel  Name="Container"  Width="128" HorizontalAlignment="Left" Margin="88,33,0,41">
             <TextBox Margin="4" Text="{Binding LastName, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Width="120" />
             <TextBox Margin="4" Text="{Binding Salary, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Width="120" />
-            <ComboBox Margin="4" Text="{Binding Position}" ItemsSource="{Binding Positions}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
-            <ComboBox Margin="4" Text="{Binding City}" ItemsSource="{Binding Cities}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
-            <ComboBox Margin="4" Text="{Binding Street}" ItemsSource="{Binding Streets}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
+            <ComboBox Margin="4" Text="{Binding Position, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" ItemsSource="{Binding Positions}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
+            <ComboBox Margin="4" Text="{Binding City, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" ItemsSource="{Binding Cities}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
+            <ComboBox Margin="4" Text="{Binding Street, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" ItemsSource="{Binding Streets}" Height="23" HorizontalAlignment="Left" Width="120" IsEditable="True"/>
             <TextBox Margin="4" Text="{Binding HouseNumber, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Width="120" />
         </StackPanel>
 

@@ -10,7 +10,7 @@
                             Value="{Binding RelativeSource={x:Static RelativeSource.Self},Path=(Validation.Errors)[0].ErrorContent}" />
                     <Setter Property="Background" Value="Pink"/>
                 </Trigger>
-                </Style.Triggers>
+            </Style.Triggers>
         </Style>
         <ControlTemplate x:Key="ErrorTempl">
             <StackPanel Orientation="Horizontal">
@@ -21,7 +21,7 @@
             </StackPanel>
         </ControlTemplate>
     </Window.Resources>
-        <Grid>
+    <Grid Name="Container">
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,12,0,0" Text="X start" VerticalAlignment="Top" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,41,0,0" Text="X stop" VerticalAlignment="Top" />
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="12,70,0,0" Text="Step" VerticalAlignment="Top" />

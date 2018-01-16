@@ -37,12 +37,33 @@ namespace Lab3
         private void CalculateOnClick(object sender, RoutedEventArgs e)
         {
             values.Results.Clear();
-            double first, second;
-            for (double x = values.XStart; x <= values.XStop; x += values.Step)
+            string error = string.Empty;
+            foreach (FrameworkElement child in Container.Children)
             {
-                first = S(x);
-                second = Y(x);
-                values.Results.Add(string.Format("S({0}) = {1}, Y({0}) = {2}", x, first, second));
+                BindingExpression bindingExpression = child.GetBindingExpression(TextBox.TextProperty) ?? child.GetBindingExpression(ComboBox.TextProperty);
+                if (bindingExpression != null)
+                {
+                    bindingExpression.UpdateSource();
+                    if (Validation.GetHasError(child))
+                    {
+                        error = Validation.GetErrors(child)[0].Exception.Message;
+                        break;
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(error))
+            {
+                double first, second;
+                for (double x = values.XStart; x <= values.XStop; x += values.Step)
+                {
+                    first = S(x);
+                    second = Y(x);
+                    values.Results.Add(string.Format("S({0}) = {1}, Y({0}) = {2}", x, first, second));
+                }
+            }
+            else
+            {
+                MessageBox.Show(this, error, "Проверка данных", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
