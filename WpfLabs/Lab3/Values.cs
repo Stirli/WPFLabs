@@ -11,6 +11,8 @@ namespace Lab3
     {
         private double _xStop;
         private double _xStart;
+        private double _n;
+        private double _step;
 
         // TODO В WPF валидация данных делается через интерфрейс IDataErrorInfo
         // TODO То как это предлагается делать в методичке - полная (_Y_)
@@ -37,8 +39,28 @@ namespace Lab3
             }
         }
 
-        public double Step { get; set; }
-        public double N { get; set; }
+        public double Step
+        {
+            get { return _step; }
+            set
+            {
+                if (value <= 0)
+                    throw new ArgumentException("Шаг должен быть больше 0.");
+                _step = value;
+            }
+        }
+
+        public double N
+        {
+            get { return _n; }
+            set
+            {
+                if (value < 1)
+                    throw new ArgumentException("N должно быть больше 0.");
+                _n = value;
+            }
+        }
+
         public ObservableCollection<string> Results { get; set; }
 
         public Values()

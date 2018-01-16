@@ -30,7 +30,7 @@
         <TextBox Text="{Binding XStop, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Margin="80,40,0,0" VerticalAlignment="Top" Width="120" />
         <TextBox Text="{Binding Step, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Margin="80,69,0,0" VerticalAlignment="Top" Width="120" />
         <TextBox Text="{Binding N, ValidatesOnExceptions=True, UpdateSourceTrigger=PropertyChanged}" Validation.ErrorTemplate="{StaticResource ErrorTempl}" Height="23" HorizontalAlignment="Left" Margin="80,98,0,0" VerticalAlignment="Top" Width="120" />
-        <ListBox ItemsSource="{Binding Results}" Height="288" HorizontalAlignment="Left" Margin="206,11,0,0" VerticalAlignment="Top" Width="189" />
+        <ListBox ItemsSource="{Binding Results}" Margin="206,11,10,12" />
         <Button Content="Calculate" Click="CalculateOnClick" Height="23" HorizontalAlignment="Left" Margin="125,127,0,0" VerticalAlignment="Top" Width="75" />
     </Grid>
 </Window>
