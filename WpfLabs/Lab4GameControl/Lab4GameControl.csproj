@@ -51,12 +51,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Context.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="BomberPlane.xaml.cs">
       <DependentUpon>BomberPlane.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameObject.cs" />
     <Compile Include="Properties\Annotations.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -80,7 +78,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\background.png" />
+    <None Include="Assets\background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Page Include="BomberPlane.xaml">
@@ -89,13 +89,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\desert-4682.jpg" />
+    <None Include="Assets\desert-4682.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\bomber.png" />
+    <None Include="Assets\bomber.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\bomb.png" />
+    <None Include="Assets\bomb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -104,7 +110,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\target.png" />
+    <None Include="Assets\target.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

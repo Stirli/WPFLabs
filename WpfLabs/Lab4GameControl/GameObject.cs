@@ -4,124 +4,77 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Lab4GameControl.Annotations;
 
 namespace Lab4GameControl
 {
-    public abstract class GameObject : INotifyPropertyChanged
+    public abstract class GameObject
     {
-        private bool _isVisible;
-        private BitmapSource _image;
-        private int _x;
-        private int _y;
+        private double _x;
+        private double _y;
 
-        public int X
+        public double X
         {
             get { return _x; }
             set
             {
-                if (value == _x) return;
+                if (value.Equals(_x)) return;
                 _x = value;
-                OnPropertyChanged("X");
             }
         }
 
-        public int Y
+        public double Y
         {
             get { return _y; }
             set
             {
-                if (value == _y) return;
+                if (value.Equals(_y)) return;
                 _y = value;
-                OnPropertyChanged("Y");
             }
         }
 
-        public virtual string Name { get; set; }
-        public BitmapSource Image
-        {
-            get { return _image; }
-            set
-            {
-                if (Equals(value, _image)) return;
-                _image = value;
-                OnPropertyChanged("Image");
-            }
-        }
 
-        public bool IsVisible
+       
+
+        protected GameObject()
         {
-            get { return _isVisible; }
-            set
-            {
-                if (value == _isVisible) return;
-                _isVisible = value;
-                OnPropertyChanged("IsVisible");
-            }
+            var visual = new Image();
+            //visual.SetBinding(System.Windows.Controls.Image.SourceProperty, new Binding("Image"));
+            //AddVisualChild(visual);
         }
 
         public abstract void Update();
-        
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged(string propertyName)
+        public event ObjectMovedEventHandler ObjectMoved;
+
+        protected virtual void OnObjectMoved(ObjectMovedEventHandlerArgs args)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            var handler = ObjectMoved;
+            if (handler != null) handler(this, args);
         }
+    }
+
+    public delegate void ObjectMovedEventHandler(object sender, ObjectMovedEventHandlerArgs args);
+
+    public class ObjectMovedEventHandlerArgs
+    {
     }
 
     public class Bomber : GameObject
     {
-        public GameObject Bomb { get; set; }
-
         public Bomber()
         {
-            IsVisible = true;
+            //Uri bitmapUri = new Uri("/Assets/bomb.png", UriKind.Relative);
+            //Image = new BitmapImage(bitmapUri);
         }
-
-        public override string Name { get { return "Bomber"; } }
 
         public override void Update()
         {
-            X += 1;
-            if (X > 1300)
-            {
-                X = -450;
-            }
-        }
 
-        public void Fire()
-        {
-            Bomb.X = X + 150;
-            Bomb.Y = Y + 50;
-            Bomb.IsVisible = true;
-        }
-    }
-
-    public class Bomb : GameObject
-    {
-        private double y = 0.5;
-        public override string Name { get { return "Bomb"; } }
-        public override void Update()
-        {
-            if (IsVisible)
-            {
-                X += 1;
-                Y += (int)(y += 0.05);
-            }
-            if (Y > 600)
-            {
-                y = 0;
-                IsVisible = false;
-            }
-        }
-
-        public void OnDestroyed()
-        {
-            
         }
     }
 }

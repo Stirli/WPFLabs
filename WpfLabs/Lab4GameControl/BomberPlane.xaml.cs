@@ -23,25 +23,24 @@ namespace Lab4GameControl
     /// </summary>
     public partial class BomberPlane : UserControl
     {
-        private Context _context;
         public BomberPlane()
         {
             InitializeComponent();
-            _context = new Context();
-            _context.Bomber.Image = GetBitmapSource("/Assets/bomber.png");
-            _context.Bomb.Image = GetBitmapSource("/Assets/bomb.png");
-            foreach (GameObject gameObject in _context.GameObjects)
-            {
-                Image image = new Image();
-                image.SetBinding(Canvas.TopProperty, new Binding(gameObject.Name + ".Y"));
-                image.SetBinding(Canvas.LeftProperty, new Binding(gameObject.Name + ".X"));
-                image.SetBinding(Image.SourceProperty, new Binding(gameObject.Name + ".Image"));
-                image.SetBinding(Image.VisibilityProperty, new Binding(gameObject.Name + ".IsVisible") { Converter = new BooleanToVisibilityConverter() });
-                image.Height = 60;
-                gameArea.Children.Add(image);
-            }
-            TargetDestroyed += (sender, args) => _context.Bomb.OnDestroyed();
-            DataContext = _context;
+            //_context = new Context();
+            //_context.Bomber.Image = GetBitmapSource("/Assets/bomber.png");
+            //_context.Bomb.Image = GetBitmapSource("/Assets/bomb.png");
+            //foreach (GameObject gameObject in _context.GameObjects)
+            //{
+            //    Image image = new Image();
+            //    image.SetBinding(Canvas.TopProperty, new Binding(gameObject.Name + ".Y"));
+            //    image.SetBinding(Canvas.LeftProperty, new Binding(gameObject.Name + ".X"));
+            //    image.SetBinding(Image.SourceProperty, new Binding(gameObject.Name + ".Image"));
+            //    image.SetBinding(Image.VisibilityProperty, new Binding(gameObject.Name + ".IsVisible") { Converter = new BooleanToVisibilityConverter() });
+            //    image.Height = 60;
+            //    gameArea.Children.Add(image);
+            //}
+            //TargetDestroyed += (sender, args) => _context.Bomb.OnDestroyed();
+            //DataContext = _context;
         }
 
         private static BitmapSource GetBitmapSource(string resName)
@@ -51,43 +50,19 @@ namespace Lab4GameControl
             return bitmapSource;
         }
 
-        public void Update()
+        public void StartGame()
         {
-            Task.Factory.StartNew(() =>
-            {
-                while (true)
-                {
-                    foreach (GameObject o in _context.GameObjects)
-                    {
-                        o.Update();
-                    }
-                    gameArea.Dispatcher.Invoke(DispatcherPriority.Background, new Action(() =>
-                    {
-                        HitTestResult res = VisualTreeHelper.HitTest(gameArea, new Point(_context.Bomb.X, _context.Bomb.Y));
-                        if (res != null)
-                        {
-                            var el = res.VisualHit as FrameworkElement;
-                            if (el.Name.Equals("Target"))
-                                MessageBox.Show(el.Name);
-                        }
-                    }));
-
-                    Thread.Sleep(10);
-                }
-            });
+            
         }
 
-        public void OnFire()
+        public void StopGame()
         {
-            _context.Bomber.Fire();
+            
         }
 
-        public event EventHandler TargetDestroyed;
-
-        protected virtual void OnTargetDestroyed()
+        public void Fire()
         {
-            var handler = TargetDestroyed;
-            if (handler != null) handler(this, EventArgs.Empty);
+            
         }
 
         private void Image_OnMouseDown(object sender, MouseButtonEventArgs e)

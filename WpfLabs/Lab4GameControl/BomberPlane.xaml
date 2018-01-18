@@ -8,8 +8,11 @@
              Width="1280" Height="720">
     <UserControl.Resources>
     </UserControl.Resources>
-    <Canvas Name="gameArea">
-        <Image Source="pack://application:,,,/Lab4GameControl;component/Assets/desert-4682.jpg" Width="1545" Canvas.Bottom="0"/>
-        <Image Name="Target" Source="pack://application:,,,/Lab4GameControl;component/Assets/target.png" Height="100" Canvas.Left="932" Canvas.Top="564" MouseDown="Image_OnMouseDown"/>
+    <Grid>
+	<Canvas Name="gameArea">
+        <Image Source="/Assets/desert-4682.jpg" Width="1545" Canvas.Bottom="0"/>
+        <Image Name="Target" Source="/Assets/target.png" Height="100" Canvas.Left="932" Canvas.Top="564" MouseDown="Image_OnMouseDown"/>
+        
     </Canvas>
+	</Grid>
 </UserControl>

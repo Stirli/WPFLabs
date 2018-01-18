@@ -26,12 +26,10 @@ namespace Lab4
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            BomberPlane.Update();
         }
 
         private void Filre_Button_Click(object sender, RoutedEventArgs e)
         {
-            BomberPlane.OnFire();
         }
     }
 }
