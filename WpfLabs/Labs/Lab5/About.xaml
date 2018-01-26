@@ -1,0 +1,10 @@
+﻿<Window x:Class="Lab5.About"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="About" Height="190" Width="272" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Label>VPaint 1.0</Label>
+        <Label>Разработал: Игорь Шершнев</Label>
+        <Label>©Игорь Шершнев 2018</Label>
+    </StackPanel>
+</Window>
