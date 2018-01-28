@@ -62,6 +62,7 @@
       <DependentUpon>BrushDialog.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MainContext.cs" />
     <Compile Include="ProgramCommands.cs" />
     <Compile Include="ShapeData.cs" />
     <Page Include="About.xaml">
