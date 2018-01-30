@@ -1,0 +1,66 @@
+﻿<Window x:Class="Lab4.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:lab4="clr-namespace:Lab4"
+        Title="MainWindow" Height="720" Width="1280">
+    <DockPanel>
+        <Label Foreground="Red"  Background="#46FFFFFF" DockPanel.Dock="Top">Для снятия выделения с объекта зажмите Ctrl и кликните по объекту еще раз</Label>
+        <ListBox DockPanel.Dock="Top" ItemsSource="{Binding Log}" Height="150"></ListBox>
+        <StackPanel DockPanel.Dock="Right" Width="200">
+            <TextBlock Padding="4" Text="{Binding ElementName=ListBox, Path=SelectedItem.Name}"/>
+            <TextBlock Padding="4">
+                <TextBlock.Text>
+                    <MultiBinding  StringFormat="{}Координаты: X={0:F}; Y={1:F}" >
+                        <Binding ElementName="ListBox" Path="SelectedItem.Rectangle.Location.X"></Binding>
+                        <Binding ElementName="ListBox" Path="SelectedItem.Rectangle.Location.Y"></Binding>
+                    </MultiBinding>
+                </TextBlock.Text>
+            </TextBlock>
+            <ListBox ItemsSource="{Binding GameObjects}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="lab4:GameObjectBase">
+                        <StackPanel>
+                            <TextBlock Padding="4" Text="{Binding Path=Name}"/>
+                            <TextBlock Padding="4">
+                                <TextBlock.Text>
+                                    <MultiBinding  StringFormat="{}Координаты: X={0:F}; Y={1:F}" >
+                                        <Binding Path="Rectangle.Location.X"></Binding>
+                                        <Binding Path="Rectangle.Location.Y"></Binding>
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
+        <Grid>
+            <Image Source="/Lab4;component/Assets/background.png"  Stretch="UniformToFill"></Image>
+            <ListBox ItemsSource="{Binding GameObjects}" Background="Transparent" Name="ListBox" Loaded="ListBox_OnLoaded" PreviewKeyDown="ListBox_OnPreviewKeyDown">
+                <ListBox.LayoutTransform>
+                    <ScaleTransform ScaleY="-1"></ScaleTransform>
+                </ListBox.LayoutTransform>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style>
+                        <Setter Property="Canvas.Left" Value="{Binding Rectangle.X}"/>
+                        <Setter Property="Canvas.Top" Value="{Binding Rectangle.Y}"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="lab4:GameObjectBase">
+                        <Image Source="{Binding Image}" Width="{Binding Rectangle.Width}" Height="{Binding Rectangle.Height}">
+                            <Image.LayoutTransform>
+                                <ScaleTransform ScaleY="-1"></ScaleTransform>
+                            </Image.LayoutTransform>
+                        </Image>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </DockPanel>
+</Window>
