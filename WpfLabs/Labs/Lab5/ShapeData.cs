@@ -1,15 +1,18 @@
 ﻿using System.ComponentModel;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Windows;
 using System.Windows.Media;
 using Lab5.Annotations;
 
 namespace Lab5
 {
-    public class ShapeData:INotifyPropertyChanged
+    public class ShapeData : INotifyPropertyChanged
     {
         private Brush _background;
         private Brush _border;
         private double _borderWidth;
+        private Point _position;
 
         public ShapeData()
         {
@@ -20,15 +23,22 @@ namespace Lab5
 
         public ShapeData(ShapeData shape)
         {
-            X = shape.X;
-            Y = shape.Y;
+            Position = shape.Position;
             Background = shape.Background;
             Border = shape.Border;
             BorderWidth = shape.BorderWidth;
         }
 
-        public double X { get; set; }
-        public double Y { get; set; }
+        public Point Position
+        {
+            get { return _position; }
+            set
+            {
+                if (value.Equals(_position)) return;
+                _position = value;
+                OnPropertyChanged("Position");
+            }
+        }
 
         public Brush Background
         {
@@ -74,8 +84,8 @@ namespace Lab5
             BrushConverter bc = new BrushConverter();
             return new ShapeData
             {
-                X = double.Parse(strs[0]),
-                Y = double.Parse(strs[1]),
+                Position = new Point(double.Parse(strs[0], CultureInfo.InvariantCulture), 
+                    double.Parse(strs[1], CultureInfo.InvariantCulture)),
                 Background = bc.ConvertFrom(strs[2]) as Brush,
                 Border = bc.ConvertFrom(strs[3]) as Brush,
                 BorderWidth = double.Parse(strs[4])
@@ -84,7 +94,7 @@ namespace Lab5
 
         public override string ToString()
         {
-            return string.Format("{0},{1},{2},{3},{4}", X, Y, Background, Border, BorderWidth);
+            return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", Position, Background, Border, BorderWidth);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
