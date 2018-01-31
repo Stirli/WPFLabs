@@ -34,47 +34,49 @@ namespace Lab4
                         VisualTreeHelper.HitTest(visual, item2.Rectangle.);
              */
 
-            var img1 = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/target.png", UriKind.RelativeOrAbsolute));
-            var img2 = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomber.png", UriKind.RelativeOrAbsolute));
-            var img3 = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
-            var img4 = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomb.png", UriKind.RelativeOrAbsolute));
-            ContextGameObject context = new ContextGameObject(ListBox.RenderSize);
+            var targetImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/target.png", UriKind.RelativeOrAbsolute));
+            var bomberImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomber.png", UriKind.RelativeOrAbsolute));
+            var bumImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
+            var bombImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomb.png", UriKind.RelativeOrAbsolute));
+            Context context = new Context(ListBox.RenderSize);
             Log.Write = (str) =>
             {
                 try
                 {
-                    context.Log.Insert(0,DateTime.Now + " : " + str);
+                    context.Log.Insert(0, DateTime.Now + " : " + str);
                 }
                 catch (Exception exception)
                 {
                     Log.Write(exception.Message);
                 }
             };
-            var ground = context.CreateGameObject<StaticObject>();
-            ground.Rectangle = new Rect(0, 0, ListBox.RenderSize.Width,49);
-            var bomber = context.CreateGameObject<Bomber>();
-            bomber.Image = img2;
-            bomber.Rectangle = new Rect(50, 500, 200, 150);
-            bomber.Name = "Самолет";
-            var panzer = context.CreateGameObject<Panzer>();
-            panzer.Images = new[] { img1, img3 };
-            panzer.Image = img1;
-            panzer.Rectangle = new Rect(700, 50, 200, 150);
-            panzer.Name = "Танк";
-
+            StaticObject ground = new StaticObject(); context.CreateGameObject(ground, Dispatcher);
+            ground.Rectangle = new Rect(0, 0, ListBox.RenderSize.Width, 49);
+            Bomber bomber = new Bomber
+            {
+                Image = bomberImg,
+                Rectangle = new Rect(50, 500, 200, 100),
+                Name = "Самолет"
+            };
+            context.CreateGameObject(bomber, Dispatcher);
+            Panzer panzer = new Panzer
+            {
+                Images = new[] { targetImg, bumImg },
+                Image = targetImg,
+                Rectangle = new Rect(700, 50, 200, 150),
+                Name = "Танк"
+            };
+            context.CreateGameObject(panzer, Dispatcher);
             Timer t = new Timer(10);
             t.Elapsed += (s, args) =>
             {
                 List<GameObjectBase> list = context.GameObjects.ToList();
-                for (var i = 0; i < list.Count; i++)
-                {
-                    var item = list[i];
-                    item.Update();
-                }
-                for (var i = 0; i < list.Count; i++)
-                {
-                    var item = list[i];
+                context.UpdateObjects();
 
+                for (var i = 1; i < list.Count; i++)
+                {
+                    var item = list[i];
+                    if(item.Name=="Бомба")
                     for (int j = 0; j < list.Count; j++)
                     {
                         if (i == j)
@@ -82,23 +84,28 @@ namespace Lab4
                         var item2 = list[j];
                         if (item.Rectangle.IntersectsWith(item2.Rectangle))
                         {
-                            UIElement el = ListBox.ItemContainerGenerator.ContainerFromItem(item) as UIElement;
-                            Dispatcher.Invoke(new Action(() =>
-                            {
-                                item.OnColision(item2);
-                                item2.OnColision(item);
-                            }));
+                            item.OnColision(item2);
+                            item2.OnColision(item);
+                            //Dispatcher.Invoke(new Action(() =>
+                            //{
+                            //}));
                         }
                     }
                 }
             };
+
             shoot = () =>
             {
-                var bomb = context.CreateGameObject<Bomb>();
-                bomb.Image = img4;
-                bomb.Images = new[] { img4, img3 };
-                bomb.Rectangle = new Rect(bomber.Rectangle.TopLeft, new Size(50, 100));
-                bomb.Name = "Бомба";
+                Point point = bomber.Rectangle.TopLeft;
+                point.Offset(50, -100);
+                Bomb bomb = new Bomb
+                {
+                    Image = bombImg,
+                    Images = new[] { bombImg, bumImg },
+                    Rectangle = new Rect(point, new Size(30, 30)),
+                    Name = "Бомба"
+                };
+                context.CreateGameObject(bomb, Dispatcher);
             };
 
             t.Start();

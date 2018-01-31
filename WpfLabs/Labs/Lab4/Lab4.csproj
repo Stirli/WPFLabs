@@ -65,7 +65,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bomber.cs" />
-    <Compile Include="ContextGameObject.cs" />
+    <Compile Include="ContextGameObj.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

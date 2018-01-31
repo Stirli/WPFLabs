@@ -6,12 +6,14 @@ namespace Lab4
     class Panzer : GameObjectBase
     {
         private double d;
+        private bool isdead;
 
-        public override void Update()
+        protected override void OnUpdate()
         {
+            if (isdead) return;
             d += .01;
             var rectangle = Rectangle;
-            // rectangle.X += (Math.Sin(d));
+             rectangle.X += (Math.Sin(d));
             if (rectangle.X >= SceneSize.Width)
             {
                 rectangle.X = -Rectangle.Width;
@@ -19,36 +21,26 @@ namespace Lab4
 
             Rectangle = rectangle;
 
-            if (BeforeDestroing())
-                Destroy();
         }
 
-        int timer = 0;
-
-        protected bool BeforeDestroing()
+        public override void OnColision(GameObjectBase obj)
         {
-            if (timer == 200)
+            Log.Write(Name + obj.Name + ".OnColision()");
+            if (obj.Name.Equals("Бомба"))
             {
-                Image = Images[1];
-                return false;
+                //Image = Images[1];
+                WithDelay(Destroy,1500);
+                isdead = true;
             }
-
-            if (timer >= 0)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 
     class Bomb : GameObjectBase
     {
-        private int timer = 200;
-        public double d = .01;
-        public override void Update()
+        private bool isdead;
+        protected override void OnUpdate()
         {
-            d += .01;
+            if (isdead) return;
             var rectangle = Rectangle;
             rectangle.Y -= 1;
             if (rectangle.X >= SceneSize.Width)
@@ -57,42 +49,20 @@ namespace Lab4
             }
 
             Rectangle = rectangle;
-
-            if (BeforeDestroing())
-                Destroy();
-        }
-
-        protected bool BeforeDestroing()
-        {
-            if (timer-- == 200)
-            {
-                Image = Images[1];
-                return false;
-            }
-
-            if (timer >= 0)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         public override void OnColision(GameObjectBase obj)
         {
-            Log.Write(Name + obj.Name + ".OnColision()");
-            if (obj.Name.Equals("Танк"))
-                obj.Destroy();
             if (!obj.Name.Equals("Самолет"))
-                Destroy();
+            {
+                //Image = Images[1];
+                isdead = true;
+                WithDelay(Destroy,1500);
+            }
         }
     }
 
     class StaticObject : GameObjectBase
     {
-        public override void Update()
-        {
-
-        }
     }
 }

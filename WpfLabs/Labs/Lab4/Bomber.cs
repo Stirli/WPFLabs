@@ -2,7 +2,8 @@
 {
     class Bomber : GameObjectBase
     {
-        public override void Update()
+
+        protected override void OnUpdate()
         {
             var rectangle = Rectangle;
             rectangle.X += 1;
