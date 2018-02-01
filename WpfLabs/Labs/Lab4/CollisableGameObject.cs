@@ -28,7 +28,7 @@ namespace Lab4
             Log.Write(Name + obj.Name + ".OnColision()");
             if (obj.Name.Equals("Бомба"))
             {
-                //Image = Images[1];
+                Image = Images[1];
                 WithDelay(Destroy,1500);
                 isdead = true;
             }
@@ -55,9 +55,9 @@ namespace Lab4
         {
             if (!obj.Name.Equals("Самолет"))
             {
-                //Image = Images[1];
+                Image = Images[1];
                 isdead = true;
-                WithDelay(Destroy,1500);
+                WithDelay(Destroy,400);
             }
         }
     }

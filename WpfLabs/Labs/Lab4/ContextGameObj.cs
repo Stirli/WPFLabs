@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using System.Timers;
+using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -93,13 +93,8 @@ namespace Lab4
 
         protected void WithDelay(Action action, int delay)
         {
-            Timer t = new Timer(delay);
-            t.Elapsed += (sender, args) =>
-            {
-                action();
-                t.Stop();
-            };
-            t.Start();
+            Timer t = new Timer(state => action());
+            
         }
 
 
