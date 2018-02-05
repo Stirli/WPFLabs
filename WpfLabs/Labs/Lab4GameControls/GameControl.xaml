@@ -1,0 +1,34 @@
+﻿<UserControl x:Class="Lab4GameControls.GameControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lgc="clr-namespace:Lab4GameControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="lgc:GameCommands.Start" Executed="StartCommandBinding_OnExecuted" PreviewCanExecute="StartCommandBinding_OnCanExecute"/>
+        <CommandBinding Command="lgc:GameCommands.Stop"/>
+        <CommandBinding Command="lgc:GameCommands.Fire"/>
+    </UserControl.CommandBindings>
+    <Grid>
+        <Image Source="/Lab4GameControls;component/Assets/background.png" Stretch="UniformToFill"/>
+        <Canvas>
+            <Canvas.LayoutTransform>
+                <ScaleTransform ScaleY="-1"></ScaleTransform>
+            </Canvas.LayoutTransform>
+            <Canvas.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <ScaleTransform ScaleY="-1"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Canvas.Resources>
+            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" Width="250" Canvas.Left="4" Canvas.Top="582"/>
+            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" Width="150" Canvas.Left="514" Canvas.Top="12" />
+            <Image Name="BombVisual" Source="/Lab4GameControls;component/Assets/bomb.png" Width="50" Canvas.Left="50" Canvas.Top="240" Visibility="Collapsed" />
+        </Canvas>
+    </Grid>
+</UserControl>
