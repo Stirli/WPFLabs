@@ -6,8 +6,8 @@
     <DockPanel>
         <lgc:GameControl Name="GameControl" Height="720" Width="1280"/>
         <StackPanel DockPanel.Dock="Right" Width="300">
-            <Button Content="Старт" Command="lgc:GameCommands.Start" CommandTarget="{Binding ElementName=GameControl}"/>
-            <Button Content="Стоп" Command="lgc:GameCommands.Stop" CommandTarget="{Binding ElementName=GameControl}"/>
+            <Button Content="Старт/Пауза" Command="lgc:GameCommands.Start" CommandTarget="{Binding ElementName=GameControl}"/>
+            <Button Content="Reset" Command="lgc:GameCommands.Reset" CommandTarget="{Binding ElementName=GameControl}"/>
             <Button Content="Огонь" Command="lgc:GameCommands.Fire" CommandTarget="{Binding ElementName=GameControl}"/>
         </StackPanel>
     </DockPanel>

@@ -1,70 +1,132 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows;
-using System.Windows.Data;
-using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
-    class Scene : DependencyObject, IDisposable
+    using System.ComponentModel;
+
+    using Lab4GameControls.Annotations;
+
+    internal class Scene : INotifyPropertyChanged, IDisposable
     {
         private Timer t;
-        public GameObject Panzer { get; set; }
-        public GameObject Bomber { get; set; }
+
+        private Panzer panzer;
+
+        private Bomb bomb;
+
+        private Bomber bomber;
+
+        public Panzer Panzer
+        {
+            get
+            {
+                return this.panzer;
+            }
+
+            set
+            {
+                if (Equals(value, this.panzer)) return;
+                this.panzer = value;
+                this.OnPropertyChanged("Panzer");
+            }
+        }
+
+        public Bomber Bomber
+        {
+            get
+            {
+                return this.bomber;
+            }
+
+            set
+            {
+                if (Equals(value, this.bomber)) return;
+                this.bomber = value;
+                this.OnPropertyChanged("Bomber");
+            }
+        }
+
+        public Bomb Bomb
+        {
+            get
+            {
+                return this.bomb;
+            }
+
+            set
+            {
+                if (Equals(value, this.bomb)) return;
+                this.bomb = value;
+                this.OnPropertyChanged("Bomb");
+            }
+        }
 
         public bool IsBuisy { get; set; }
 
-
-        public double Width
+        public void Init()
         {
-            get { return (double)GetValue(WidthProperty); }
-            set { SetValue(WidthProperty, value); }
-        }
+            Rect objectRect = this.Panzer.ObjectRect;
+            objectRect.Location = new Point(600, 50);
+            this.Panzer.ObjectRect = objectRect;
 
-        // Using a DependencyProperty as the backing store for Width.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.Register("Width", typeof(double), typeof(Scene), new UIPropertyMetadata(0.0));
-        
-        public double Height
-        {
-            get { return (double)GetValue(HeightProperty); }
-            set { SetValue(HeightProperty, value); }
-        }
+            Rect rect = this.Bomber.ObjectRect;
+            rect.Location = new Point(0, 600);
+            this.Bomber.ObjectRect = rect;
 
-        // Using a DependencyProperty as the backing store for Height.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HeightProperty =
-            DependencyProperty.Register("Height", typeof(double), typeof(Scene), new UIPropertyMetadata(0.0));
+            this.Bomb = new Bomb();
+        }
 
         public void Start()
         {
-            if (!IsBuisy)
+            if (!this.IsBuisy)
             {
-                t = new Timer(
-                     state =>
-                     {
-                         Panzer.Update();
-                         Bomber.Update();
-                     }, null, 0, 30);
-                IsBuisy = true;
+                this.t = new Timer(
+                    state =>
+                    {
+                        this.Panzer.Update();
+                        this.Bomber.Update();
+                        this.Bomb.Update();
+                        if (this.Bomb.ObjectRect.IntersectsWith(this.Panzer.ObjectRect))
+                        {
+                            this.Bomb.IsEnabled = false;
+                            this.Panzer.IsEnabled = false;
+                            this.Stop();
+                        }
+                    },
+                    null,
+                    0,
+                    10);
+
+                this.IsBuisy = true;
             }
         }
 
         public void Stop()
         {
-            if (IsBuisy)
+            if (this.IsBuisy)
             {
-                t.Dispose();
-                IsBuisy = false;
+                this.t.Dispose();
+                this.IsBuisy = false;
             }
         }
 
         public void Dispose()
         {
-            if (t != null) t.Dispose();
+            if (this.t != null)
+            {
+                this.t.Dispose();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = this.PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

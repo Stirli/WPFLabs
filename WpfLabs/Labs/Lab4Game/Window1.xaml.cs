@@ -20,7 +20,7 @@ namespace Lab4Game
     {
         public Window1()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

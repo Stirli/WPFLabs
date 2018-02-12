@@ -10,40 +10,60 @@ namespace Lab4GameControls
 {
     class GameObject : INotifyPropertyChanged
     {
-        private Point _position;
+        private Rect objectRect;
         private string _state;
 
-        public Point Position
+        public GameObject()
         {
-            get { return _position; }
+            this.IsEnabled = true;
+        }
+
+        private bool isEnabled;
+
+        public Rect ObjectRect
+        {
+            get { return this.objectRect; }
             set
             {
-                if (value.Equals(_position)) return;
-                _position = value;
-                OnPropertyChanged("Position");
+                if (value.Equals(this.objectRect)) return;
+                this.objectRect = value;
+                this.OnPropertyChanged("ObjectRect");
             }
         }
 
         public string State
         {
-            get { return _state; }
+            get { return this._state; }
             protected set
             {
-                if (value == _state) return;
-                _state = value;
-                OnPropertyChanged("State");
+                if (value == this._state) return;
+                this._state = value;
+                this.OnPropertyChanged("State");
             }
         }
 
+        public bool IsEnabled
+        {
+            get
+            {
+                return this.isEnabled;
+            }
 
-        public bool IsEnabled { get; set; }
+            set
+            {
+                if (value == this.isEnabled) return;
+                this.isEnabled = value;
+                this.OnPropertyChanged("IsEnabled");
+            }
+        }
+
         public virtual void Update() { }
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            var handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
@@ -52,13 +72,16 @@ namespace Lab4GameControls
     {
         private string _state;
 
-        Counter c = new Counter { Step = .03, End = Math.PI * 2 };
+        Counter c = new Counter { Step = .02, End = Math.PI * 2 };
 
         public override void Update()
         {
-            Point point = Position;
-            point.X += Math.Sin(c.Value) * 2;
-            Position = point;
+            if (this.IsEnabled)
+            {
+                Rect rect = this.ObjectRect;
+                rect.X += Math.Sin(this.c.Value) * 4;
+                this.ObjectRect = rect;
+            }
         }
     }
 
@@ -68,14 +91,28 @@ namespace Lab4GameControls
 
         public Bomber()
         {
-            c = new Counter {Start = -200,Step = 2, End = 1280 };
+            this.c = new Counter { Start = -200, Step = 2, End = 1280 };
         }
 
         public override void Update()
         {
-            Point point = Position;
-            point.X = c.Value;
-            Position = point;
+            Rect rect = this.ObjectRect;
+            rect.X = Math.Round(this.c.Value);
+            this.ObjectRect = rect;
+        }
+    }
+
+    class Bomb : GameObject
+    {
+
+        public override void Update()
+        {
+            if (this.IsEnabled)
+            {
+                Rect rect = this.ObjectRect;
+                rect.Y -= 2;
+                this.ObjectRect = rect;
+            }
         }
     }
 }

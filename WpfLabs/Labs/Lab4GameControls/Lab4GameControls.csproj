@@ -53,10 +53,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl1.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="Counter.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GameObject.cs" />
@@ -67,10 +63,6 @@
     <Compile Include="GameObjectContext.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="UserControl1.xaml.cs">
-      <DependentUpon>UserControl1.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

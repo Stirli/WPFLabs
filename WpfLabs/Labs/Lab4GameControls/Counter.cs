@@ -16,10 +16,10 @@ namespace Lab4GameControls
         {
             get
             {
-                double d = _value += Step;
-                if (d >= End)
+                double d = this._value += this.Step;
+                if (d >= this.End)
                 {
-                    d = _value = Start;
+                    d = this._value = this.Start;
                 }
 
                 return d;

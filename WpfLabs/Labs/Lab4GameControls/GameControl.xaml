@@ -6,22 +6,29 @@
              xmlns:lgc="clr-namespace:Lab4GameControls"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter1" />
+    </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding Command="lgc:GameCommands.Start" Executed="StartCommandBinding_OnExecuted" CanExecute="StartCommandBinding_OnCanExecute"/>
-        <CommandBinding Command="lgc:GameCommands.Stop" Executed="StopCommandBinding_OnExecuted" CanExecute="StopCommandBinding_OnCanExecute"/>
-        <CommandBinding Command="lgc:GameCommands.Fire"/>
+        <CommandBinding Command="lgc:GameCommands.Reset" Executed="StopCommandBinding_OnExecuted" CanExecute="StopCommandBinding_OnCanExecute"/>
+        <CommandBinding Command="lgc:GameCommands.Fire" Executed="FireCommandBinding_OnExecuted" CanExecute="FireCommandBinding_OnCanExecute"/>
     </UserControl.CommandBindings>
     <Grid>
         <Image Source="/Lab4GameControls;component/Assets/background.png" Stretch="UniformToFill"/>
-        <Canvas ClipToBounds="True">
+        <!--ClipToBounds="True" обрезает выступающие за край объекты; UseLayoutRounding="True" Убирает искажения картинки в моменты, когда ее позиция не кратна пи-->
+        <Canvas ClipToBounds="True" UseLayoutRounding="False">
             <Canvas.DataContext>
                 <lgc:Scene x:Name="Context">
                     <lgc:Scene.Bomber>
-                        <lgc:Bomber Position="0,600"/>
+                        <lgc:Bomber ObjectRect="0,600,256,69"/>
                     </lgc:Scene.Bomber>
                     <lgc:Scene.Panzer>
-                        <lgc:Panzer Position="600,50"/>
+                        <lgc:Panzer ObjectRect="600,50,250,121"/>
                     </lgc:Scene.Panzer>
+                    <lgc:Scene.Bomb>
+                        <lgc:Bomb ObjectRect="0,0,30,70" IsEnabled="False"/>
+                    </lgc:Scene.Bomb>
                 </lgc:Scene>
             </Canvas.DataContext>
             <Canvas.LayoutTransform>
@@ -29,6 +36,13 @@
             </Canvas.LayoutTransform>
             <Canvas.Resources>
                 <Style TargetType="Image">
+                    <Setter Property="Source" Value="{Binding Image}"/>
+                    <Setter Property="Canvas.Left" Value="{Binding Path=ObjectRect.X}"/>
+                    <Setter Property="Canvas.Top" Value="{Binding Path=ObjectRect.Y}"/>
+                    <Setter Property="Width" Value="{Binding Path=ObjectRect.Width}"/>
+                    <Setter Property="Height" Value="{Binding Path=ObjectRect.Height}"/>
+                    <Setter Property="Stretch" Value="Fill"/>
+                    <Setter Property="Visibility" Value="{Binding Path=IsEnabled, Converter={StaticResource BooleanToVisibilityConverter1}}"/>
                     <Setter Property="LayoutTransform">
                         <Setter.Value>
                             <ScaleTransform ScaleY="-1"/>
@@ -36,9 +50,9 @@
                     </Setter>
                 </Style>
             </Canvas.Resources>
-            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" Width="250" Canvas.Left="{Binding Path=Bomber.Position.X}" Canvas.Top="{Binding Path=Bomber.Position.Y}"/>
-            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" Width="150" Canvas.Left="{Binding Path=Panzer.Position.X}" Canvas.Top="{Binding Path=Panzer.Position.Y}"/>
-            <Image Name="BombVisual" Source="/Lab4GameControls;component/Assets/bomb.png" Width="50" Canvas.Left="50" Canvas.Top="240" Visibility="Collapsed" />
+            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" DataContext="{Binding Path=Bomber}"/>
+            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" DataContext="{Binding Path=Panzer}"/>
+            <Image Name="BombVisual" Source="/Lab4GameControls;component/Assets/bomb.png" DataContext="{Binding Path=Bomb}"/>
         </Canvas>
     </Grid>
 </UserControl>

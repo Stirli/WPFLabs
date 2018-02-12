@@ -1,49 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Lab4GameControls
 {
-    using System.Threading;
-
     /// <summary>
     /// Логика взаимодействия для GameControl.xaml
     /// </summary>
     public partial class GameControl : UserControl
     {
+
         public GameControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
+            this.Context.Init();
         }
+
 
         private void StartCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Context.Start();
+            this.Context.Start();
         }
 
         private void StartCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !Context.IsBuisy;
+            e.CanExecute = !this.Context.IsBuisy;
         }
 
         private void StopCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Context.IsBuisy;
+            e.CanExecute = this.Context.IsBuisy;
         }
 
         private void StopCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Context.Stop();
+            this.Context.Stop();
+        }
+
+        private void FireCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Rect bombObjectRect = this.Context.Bomb.ObjectRect;
+            bombObjectRect.Location = this.Context.Bomber.ObjectRect.Location;
+            this.Context.Bomb.ObjectRect = bombObjectRect;
+            this.Context.Bomb.IsEnabled = true;
+        }
+
+        private void FireCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
         }
     }
 }
