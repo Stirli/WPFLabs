@@ -1,70 +1,81 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
-    class GameObject : UserControl
+    class GameObject : INotifyPropertyChanged
     {
-        public GameObject()
+        private Point _position;
+        private string _state;
+
+        public Point Position
         {
-            Image image = new Image(){Stretch = Stretch.Fill};
-            image.SetBinding(Image.SourceProperty, new Binding("Sprite") { Source = this });
-            this.Content = image;
-            this.VerticalContentAlignment = VerticalAlignment.Stretch;
-            this.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            SetBinding(Canvas.LeftProperty, new Binding("Left") { Source = this });
-            SetBinding(Canvas.TopProperty, new Binding("Top") { Source = this });
-            SizeChanged += (sender, args) =>
-                Margin = new Thickness(-args.NewSize.Width / 2, -args.NewSize.Height / 2, 0, 0);
+            get { return _position; }
+            set
+            {
+                if (value.Equals(_position)) return;
+                _position = value;
+                OnPropertyChanged("Position");
+            }
+        }
+
+        public string State
+        {
+            get { return _state; }
+            protected set
+            {
+                if (value == _state) return;
+                _state = value;
+                OnPropertyChanged("State");
+            }
         }
 
 
+        public bool IsEnabled { get; set; }
+        public virtual void Update() { }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        public double Left
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
         {
-            get { return (double)GetValue(LeftProperty); }
-            set { SetValue(LeftProperty, value); }
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    class Panzer : GameObject
+    {
+        private string _state;
+
+        Counter c = new Counter { Step = .03, End = Math.PI * 2 };
+
+        public override void Update()
+        {
+            Point point = Position;
+            point.X += Math.Sin(c.Value) * 2;
+            Position = point;
+        }
+    }
+
+    class Bomber : GameObject
+    {
+        private Counter c;
+
+        public Bomber()
+        {
+            c = new Counter {Start = -200,Step = 2, End = 1280 };
         }
 
-        // Using a DependencyProperty as the backing store for Left.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof(double), typeof(GameObject), new UIPropertyMetadata(0.0));
-
-
-
-        public double Top
+        public override void Update()
         {
-            get { return (double)GetValue(TopProperty); }
-            set { SetValue(TopProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Top.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TopProperty =
-            DependencyProperty.Register("Top", typeof(double), typeof(GameObject), new UIPropertyMetadata(0.0));
-
-
-
-        public BitmapSource Sprite
-        {
-            get { return (BitmapSource)GetValue(MyPropertyProperty); }
-            set { SetValue(MyPropertyProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("Sprite", typeof(BitmapSource), typeof(GameObject), new UIPropertyMetadata(null));
-
-        public void Destroy()
-        {
-            Visibility = Visibility.Collapsed;
+            Point point = Position;
+            point.X = c.Value;
+            Position = point;
         }
     }
 }

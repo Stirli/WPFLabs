@@ -26,21 +26,24 @@ namespace Lab4GameControls
             InitializeComponent();
         }
 
-
-
         private void StartCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            MessageBox.Show("Start");
-            Timer t = new Timer(
-                state =>
-                    {
-                        
-                    });
+            Context.Start();
         }
 
         private void StartCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = true;
+            e.CanExecute = !Context.IsBuisy;
+        }
+
+        private void StopCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = Context.IsBuisy;
+        }
+
+        private void StopCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Context.Stop();
         }
     }
 }

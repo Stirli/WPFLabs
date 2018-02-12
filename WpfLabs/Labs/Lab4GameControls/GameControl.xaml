@@ -7,15 +7,25 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280">
     <UserControl.CommandBindings>
-        <CommandBinding Command="lgc:GameCommands.Start" Executed="StartCommandBinding_OnExecuted" PreviewCanExecute="StartCommandBinding_OnCanExecute"/>
-        <CommandBinding Command="lgc:GameCommands.Stop"/>
+        <CommandBinding Command="lgc:GameCommands.Start" Executed="StartCommandBinding_OnExecuted" CanExecute="StartCommandBinding_OnCanExecute"/>
+        <CommandBinding Command="lgc:GameCommands.Stop" Executed="StopCommandBinding_OnExecuted" CanExecute="StopCommandBinding_OnCanExecute"/>
         <CommandBinding Command="lgc:GameCommands.Fire"/>
     </UserControl.CommandBindings>
     <Grid>
         <Image Source="/Lab4GameControls;component/Assets/background.png" Stretch="UniformToFill"/>
-        <Canvas>
+        <Canvas ClipToBounds="True">
+            <Canvas.DataContext>
+                <lgc:Scene x:Name="Context">
+                    <lgc:Scene.Bomber>
+                        <lgc:Bomber Position="0,600"/>
+                    </lgc:Scene.Bomber>
+                    <lgc:Scene.Panzer>
+                        <lgc:Panzer Position="600,50"/>
+                    </lgc:Scene.Panzer>
+                </lgc:Scene>
+            </Canvas.DataContext>
             <Canvas.LayoutTransform>
-                <ScaleTransform ScaleY="-1"></ScaleTransform>
+                <ScaleTransform ScaleY="-1"/>
             </Canvas.LayoutTransform>
             <Canvas.Resources>
                 <Style TargetType="Image">
@@ -26,8 +36,8 @@
                     </Setter>
                 </Style>
             </Canvas.Resources>
-            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" Width="250" Canvas.Left="4" Canvas.Top="582"/>
-            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" Width="150" Canvas.Left="514" Canvas.Top="12" />
+            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" Width="250" Canvas.Left="{Binding Path=Bomber.Position.X}" Canvas.Top="{Binding Path=Bomber.Position.Y}"/>
+            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" Width="150" Canvas.Left="{Binding Path=Panzer.Position.X}" Canvas.Top="{Binding Path=Panzer.Position.Y}"/>
             <Image Name="BombVisual" Source="/Lab4GameControls;component/Assets/bomb.png" Width="50" Canvas.Left="50" Canvas.Top="240" Visibility="Collapsed" />
         </Canvas>
     </Grid>
