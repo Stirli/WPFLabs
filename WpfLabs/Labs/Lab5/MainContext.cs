@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using Lab5.Annotations;
 
 namespace Lab5
 {
@@ -17,65 +12,64 @@ namespace Lab5
 
         public ShapeData ShapeData
         {
-            get { return _shapeData; }
+            get { return this._shapeData; }
             set
             {
-                if (Equals(value, _shapeData)) return;
-                _shapeData = value;
-                OnPropertyChanged("ShapeData");
+                if (Equals(value, this._shapeData)) return;
+                this._shapeData = value;
+                this.OnPropertyChanged("ShapeData");
             }
         }
 
         public ObservableCollection<ShapeData> Shapes
         {
-            get { return _shapes; }
+            get { return this._shapes; }
             set
             {
-                if (Equals(value, _shapes)) return;
-                _shapes = value;
-                OnPropertyChanged("Shapes");
+                if (Equals(value, this._shapes)) return;
+                this._shapes = value;
+                this.OnPropertyChanged("Shapes");
             }
         }
 
         public FileInfo FileInfo
         {
-            get { return _fileInfo; }
+            get { return this._fileInfo; }
             set
             {
-                if (Equals(value, _fileInfo)) return;
-                _fileInfo = value;
-                OnPropertyChanged("FileInfo");
+                if (Equals(value, this._fileInfo)) return;
+                this._fileInfo = value;
+                this.OnPropertyChanged("FileInfo");
             }
         }
 
 
         public MainContext()
         {
-            ShapeData = new ShapeData();
-            Shapes = new ObservableCollection<ShapeData>();
-            FileInfo = new FileInfo("Безымянный.vif");
+            this.ShapeData = new ShapeData();
+            this.Shapes = new ObservableCollection<ShapeData>();
+            this.FileInfo = new FileInfo("Безымянный.vif");
         }
 
 
         public void AddShape()
         {
-            Shapes.Add(ShapeData.Clone());
+            this.Shapes.Add(this.ShapeData.Clone());
         }
         
         public bool CanSave
         {
             get
             {
-                return Shapes.Count > 0;
+                return this.Shapes.Count > 0;
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

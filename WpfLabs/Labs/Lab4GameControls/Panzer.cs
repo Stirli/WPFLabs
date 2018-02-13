@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace Lab4GameControls
@@ -8,8 +7,8 @@ namespace Lab4GameControls
     {
         public override void Init()
         {
-            IsEnabled = true;
-            Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/target.png", UriKind.RelativeOrAbsolute));
+            this.IsEnabled = true;
+            this.Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/target.png", UriKind.RelativeOrAbsolute));
         }
     }
 }

@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Lab5
 {
@@ -20,15 +13,16 @@ namespace Lab5
     {
         public BrushDialog()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             Binding binding = new Binding("ResultData") { Source = this };
-            MainContainer.SetBinding(DataContextProperty, binding);
+            this.MainContainer.SetBinding(DataContextProperty, binding);
         }
 
         public ShapeData ResultData
         {
-            get { return (ShapeData)GetValue(ResultDataProperty); }
-            set { SetValue(ResultDataProperty, value); }
+            get { return (ShapeData)this.GetValue(ResultDataProperty); }
+            set {
+                this.SetValue(ResultDataProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for ResultData.  This enables animation, styling, binding, etc...
@@ -39,13 +33,13 @@ namespace Lab5
 
         private void OkCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            DialogResult = true;
-                Close();
+            this.DialogResult = true;
+            this.Close();
         }
 
         private void OkCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = IsValid(MainContainer);
+            e.CanExecute = this.IsValid(this.MainContainer);
         }
 
         private bool IsValid(DependencyObject obj)
@@ -55,7 +49,7 @@ namespace Lab5
             return !Validation.GetHasError(obj) &&
                    LogicalTreeHelper.GetChildren(obj)
                        .OfType<DependencyObject>()
-                       .All(IsValid);
+                       .All(this.IsValid);
         }
 
     }

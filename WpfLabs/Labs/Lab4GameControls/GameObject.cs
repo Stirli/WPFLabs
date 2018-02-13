@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
@@ -18,41 +14,41 @@ namespace Lab4GameControls
 
         public GameObject()
         {
-            IsEnabled = true;
+            this.IsEnabled = true;
         }
 
         public bool IsActive { get; set; }
 
         public Rect ObjectRect
         {
-            get { return _objectRect; }
+            get { return this._objectRect; }
             set
             {
-                if (value.Equals(_objectRect)) return;
-                _objectRect = value;
-                OnPropertyChanged("ObjectRect");
+                if (value.Equals(this._objectRect)) return;
+                this._objectRect = value;
+                this.OnPropertyChanged("ObjectRect");
             }
         }
 
         public BitmapSource Image
         {
-            get { return _image; }
+            get { return this._image; }
             set
             {
-                if (Equals(value, _image)) return;
-                _image = value;
-                OnPropertyChanged("Image");
+                if (Equals(value, this._image)) return;
+                this._image = value;
+                this.OnPropertyChanged("Image");
             }
         }
 
         public string State
         {
-            get { return _state; }
+            get { return this._state; }
             protected set
             {
-                if (value == _state) return;
-                _state = value;
-                OnPropertyChanged("State");
+                if (value == this._state) return;
+                this._state = value;
+                this.OnPropertyChanged("State");
             }
         }
 
@@ -60,14 +56,14 @@ namespace Lab4GameControls
         {
             get
             {
-                return _isEnabled;
+                return this._isEnabled;
             }
 
             set
             {
-                if (value == _isEnabled) return;
-                _isEnabled = value;
-                OnPropertyChanged("IsEnabled");
+                if (value == this._isEnabled) return;
+                this._isEnabled = value;
+                this.OnPropertyChanged("IsEnabled");
             }
         }
 
@@ -75,7 +71,7 @@ namespace Lab4GameControls
         public virtual void Update() { }
         public virtual void Destroy()
         {
-            Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
+            this.Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
         }
 
 
@@ -83,10 +79,9 @@ namespace Lab4GameControls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
 

@@ -1,10 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Threading;
-using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
@@ -19,12 +15,12 @@ namespace Lab4GameControls
 
         public Bomb Bomb
         {
-            get { return _bomb; }
+            get { return this._bomb; }
             set
             {
-                if (Equals(value, _bomb)) return;
-                _bomb = value;
-                OnPropertyChanged("Bomb");
+                if (Equals(value, this._bomb)) return;
+                this._bomb = value;
+                this.OnPropertyChanged("Bomb");
             }
         }
 
@@ -34,51 +30,52 @@ namespace Lab4GameControls
 
         public void Init()
         {
-            Panzer.Init();
-            Bomber.Init();
+            this.Panzer.Init();
+            this.Bomber.Init();
         }
 
         public void Start()
         {
-            if (IsBuisy) return;
+            if (this.IsBuisy) return;
             Counter c = new Counter();
-            _t = new Timer(
+            this._t = new Timer(
                 state =>
                 {
-                    Bomber.Update();
+                    this.Bomber.Update();
 
-                    if (!Bomb.IsEnabled) return;
-                    Bomb.Update();
-                    if (Bomb.ObjectRect.IntersectsWith(Panzer.ObjectRect))
+                    if (!this.Bomb.IsEnabled) return;
+                    this.Bomb.Update();
+                    if (this.Bomb.ObjectRect.IntersectsWith(this.Panzer.ObjectRect))
                     {
-                        if (Bomb.IsActive)
+                        if (this.Bomb.IsActive)
                         {
-                            Bomb.IsActive = false;
-                            Bomb.Destroy();
-                            Panzer.Destroy();
+                            this.Bomb.IsActive = false;
+                            this.Bomb.Destroy();
+                            this.Panzer.Destroy();
                         }
+
                         if (c.Value >= 50)
                         {
-                            Bomb.IsEnabled = false;
-                            Panzer.IsEnabled = false;
-                            OnWin();
-                            Pause();
-                            Init();
+                            this.Bomb.IsEnabled = false;
+                            this.Panzer.IsEnabled = false;
+                            this.OnWin();
+                            this.Pause();
+                            this.Init();
                         }
                     }
                     else
-                        if (Bomb.ObjectRect.Y < 0)
+                        if (this.Bomb.ObjectRect.Y < 0)
                         {
-                            if (Bomb.IsActive)
+                            if (this.Bomb.IsActive)
                             {
-                                Bomb.IsActive = false;
-                                Bomb.Destroy();
+                                this.Bomb.IsActive = false;
+                                this.Bomb.Destroy();
                             }
 
                             if (c.Value >= 50)
                             {
-                                Bomb.IsEnabled = false;
-                                OnGameOver();
+                                this.Bomb.IsEnabled = false;
+                                this.OnGameOver();
                                 c.Value = 0;
                             }
                         }
@@ -87,32 +84,31 @@ namespace Lab4GameControls
                 0,
                 10);
 
-            IsBuisy = true;
+            this.IsBuisy = true;
         }
 
         public void Pause()
         {
-            if (IsBuisy)
+            if (this.IsBuisy)
             {
-                _t.Dispose();
-                IsBuisy = false;
+                this._t.Dispose();
+                this.IsBuisy = false;
             }
         }
 
         public void Dispose()
         {
-            if (_t != null)
+            if (this._t != null)
             {
-                _t.Dispose();
+                this._t.Dispose();
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

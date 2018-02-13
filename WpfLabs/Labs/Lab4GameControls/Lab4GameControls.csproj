@@ -63,7 +63,6 @@
     </Compile>
     <Compile Include="Panzer.cs" />
     <Compile Include="Scene.cs" />
-    <Compile Include="Properties\Annotations.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

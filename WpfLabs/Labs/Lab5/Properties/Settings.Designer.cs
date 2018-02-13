@@ -21,7 +21,7 @@ namespace Lab5.Properties
     internal sealed partial class Settings : ApplicationSettingsBase
     {
 
-        private static Settings defaultInstance = ((Settings)(Synchronized(new Settings())));
+        private static Settings defaultInstance = (Settings)(Synchronized(new Settings()));
 
         public static Settings Default
         {

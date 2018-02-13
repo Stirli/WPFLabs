@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Lab4GameControls
 {
@@ -9,9 +6,10 @@ namespace Lab4GameControls
     {
         public Counter()
         {
-            Step = 1;
-            End = Double.MaxValue;
+            this.Step = 1;
+            this.End = double.MaxValue;
         }
+
         private double _value;
         public double Start { get; set; }
         public double Step { get; set; }
@@ -21,15 +19,17 @@ namespace Lab4GameControls
         {
             get
             {
-                double d = _value += Step;
-                if (d >= End)
+                double d = this._value += this.Step;
+                if (d >= this.End)
                 {
-                    d = _value = Start;
+                    d = this._value = this.Start;
                 }
 
                 return d;
             }
-            set { _value = value; }
+
+            set {
+                this._value = value; }
         }
     }
 }

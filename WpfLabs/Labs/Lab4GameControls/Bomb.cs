@@ -8,24 +8,24 @@ namespace Lab4GameControls
     {
         public override void Init()
         {
-            counter = new Counter() { Step = .02, End = double.MaxValue };
-            Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bomb.png", UriKind.RelativeOrAbsolute));
-            IsEnabled = true;
-            IsActive = true;
+            this.counter = new Counter() { Step = .02, End = double.MaxValue };
+            this.Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bomb.png", UriKind.RelativeOrAbsolute));
+            this.IsEnabled = true;
+            this.IsActive = true;
         }
 
         private Counter counter;
 
         public override void Update()
         {
-            if (IsActive)
+            if (this.IsActive)
             {
-                Rect rect = ObjectRect;
+                Rect rect = this.ObjectRect;
                 rect.X += 1;
-                double y = counter.Value;
+                double y = this.counter.Value;
                 rect.Y -= y;
-                ObjectRect = rect;
-                State = string.Format("Скорость бомбы: {0:F}",Math.Sqrt(1 + y * y));
+                this.ObjectRect = rect;
+                this.State = string.Format("Скорость бомбы: {0:F}", Math.Sqrt(1 + y * y));
             }
         }
     }

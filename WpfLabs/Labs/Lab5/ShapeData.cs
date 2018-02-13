@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Globalization;
-using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Media;
-using Lab5.Annotations;
 
 namespace Lab5
 {
@@ -16,60 +14,60 @@ namespace Lab5
 
         public ShapeData()
         {
-            Background = Brushes.Cyan;
-            Border = Brushes.Black;
-            BorderWidth = 1;
+            this.Background = Brushes.Cyan;
+            this.Border = Brushes.Black;
+            this.BorderWidth = 1;
         }
 
         public ShapeData(ShapeData shape)
         {
-            Position = shape.Position;
-            Background = shape.Background;
-            Border = shape.Border;
-            BorderWidth = shape.BorderWidth;
+            this.Position = shape.Position;
+            this.Background = shape.Background;
+            this.Border = shape.Border;
+            this.BorderWidth = shape.BorderWidth;
         }
 
         public Point Position
         {
-            get { return _position; }
+            get { return this._position; }
             set
             {
-                if (value.Equals(_position)) return;
-                _position = value;
-                OnPropertyChanged("Position");
+                if (value.Equals(this._position)) return;
+                this._position = value;
+                this.OnPropertyChanged("Position");
             }
         }
 
         public Brush Background
         {
-            get { return _background; }
+            get { return this._background; }
             set
             {
-                if (Equals(value, _background)) return;
-                _background = value;
-                OnPropertyChanged("Background");
+                if (Equals(value, this._background)) return;
+                this._background = value;
+                this.OnPropertyChanged("Background");
             }
         }
 
         public Brush Border
         {
-            get { return _border; }
+            get { return this._border; }
             set
             {
-                if (Equals(value, _border)) return;
-                _border = value;
-                OnPropertyChanged("Border");
+                if (Equals(value, this._border)) return;
+                this._border = value;
+                this.OnPropertyChanged("Border");
             }
         }
 
         public double BorderWidth
         {
-            get { return _borderWidth; }
+            get { return this._borderWidth; }
             set
             {
-                if (value.Equals(_borderWidth)) return;
-                _borderWidth = value;
-                OnPropertyChanged("BorderWidth");
+                if (value.Equals(this._borderWidth)) return;
+                this._borderWidth = value;
+                this.OnPropertyChanged("BorderWidth");
             }
         }
 
@@ -84,7 +82,7 @@ namespace Lab5
             BrushConverter bc = new BrushConverter();
             return new ShapeData
             {
-                Position = new Point(double.Parse(strs[0], CultureInfo.InvariantCulture), 
+                Position = new Point(double.Parse(strs[0], CultureInfo.InvariantCulture),
                     double.Parse(strs[1], CultureInfo.InvariantCulture)),
                 Background = bc.ConvertFrom(strs[2]) as Brush,
                 Border = bc.ConvertFrom(strs[3]) as Brush,
@@ -94,15 +92,14 @@ namespace Lab5
 
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", Position, Background, Border, BorderWidth);
+            return string.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", this.Position, this.Background, this.Border, this.BorderWidth);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

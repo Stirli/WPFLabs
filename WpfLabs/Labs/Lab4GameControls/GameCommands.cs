@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Lab4GameControls
+﻿namespace Lab4GameControls
 {
     using System.Windows.Input;
 

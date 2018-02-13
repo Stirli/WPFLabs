@@ -15,10 +15,10 @@ namespace Lab4GameControls
 
         public GameControl()
         {
-            InitializeComponent();
-            Context.OnWin = OnWin;
-            Context.OnGameOver = OnGameOver;
-            Context.Init();
+            this.InitializeComponent();
+            this.Context.OnWin = this.OnWin;
+            this.Context.OnGameOver = this.OnGameOver;
+            this.Context.Init();
         }
 
         public event EventHandler Win;
@@ -28,39 +28,40 @@ namespace Lab4GameControls
 
         public string SelectedObjectInfo
         {
-            get { return (string)GetValue(SelectedObjectInfoProperty); }
-            set { SetValue(SelectedObjectInfoProperty, value); }
+            get { return (string)this.GetValue(SelectedObjectInfoProperty); }
+            set {
+                this.SetValue(SelectedObjectInfoProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for SelectedObjectInfo.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty SelectedObjectInfoProperty =
-            DependencyProperty.Register("SelectedObjectInfo", typeof(string), typeof(GameControl), new UIPropertyMetadata(""));
+            DependencyProperty.Register("SelectedObjectInfo", typeof(string), typeof(GameControl), new UIPropertyMetadata(string.Empty));
 
 
 
         private void StartCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Context.Start();
+            this.Context.Start();
         }
 
         private void StartCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = !Context.IsBuisy;
+            e.CanExecute = !this.Context.IsBuisy;
         }
 
         private void PauseCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Context.Pause();
+            this.Context.Pause();
         }
 
         private void PauseCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Context.IsBuisy;
+            e.CanExecute = this.Context.IsBuisy;
         }
 
         private void ResetCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Context.Init();
+            this.Context.Init();
         }
 
         private void ResetCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -70,32 +71,32 @@ namespace Lab4GameControls
 
         private void FireCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            Rect bombObjectRect = Context.Bomb.ObjectRect;
-            bombObjectRect.Location = Context.Bomber.ObjectRect.Location;
-            Context.Bomb.ObjectRect = bombObjectRect;
-            Context.Bomb.Init();
+            Rect bombObjectRect = this.Context.Bomb.ObjectRect;
+            bombObjectRect.Location = this.Context.Bomber.ObjectRect.Location;
+            this.Context.Bomb.ObjectRect = bombObjectRect;
+            this.Context.Bomb.Init();
         }
 
         private void FireCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = Context.IsBuisy && !Context.Bomb.IsEnabled;
+            e.CanExecute = this.Context.IsBuisy && !this.Context.Bomb.IsEnabled;
         }
 
         protected virtual void OnWin()
         {
-            var handler = Win;
+            var handler = this.Win;
             if (handler != null) this.Dispatcher.Invoke(DispatcherPriority.Normal, handler, this, EventArgs.Empty);
         }
 
         protected virtual void OnGameOver()
         {
-            var handler = GameOver;
+            var handler = this.GameOver;
             if (handler != null) this.Dispatcher.Invoke(DispatcherPriority.Normal, handler, this, EventArgs.Empty);
         }
 
         private void Element_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            SetBinding(SelectedObjectInfoProperty, new Binding("State") { Source = (sender as FrameworkElement).DataContext });
+            this.SetBinding(SelectedObjectInfoProperty, new Binding("State") { Source = (sender as FrameworkElement).DataContext });
         }
     }
 }

@@ -50,11 +50,12 @@ namespace Lab5.Properties
         {
             get
             {
-                if ((resourceMan == null))
+                if (resourceMan == null)
                 {
                     ResourceManager temp = new ResourceManager("Lab5.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
+
                 return resourceMan;
             }
         }
@@ -70,6 +71,7 @@ namespace Lab5.Properties
             {
                 return resourceCulture;
             }
+
             set
             {
                 resourceCulture = value;

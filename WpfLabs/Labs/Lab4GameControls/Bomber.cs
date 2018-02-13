@@ -9,19 +9,19 @@ namespace Lab4GameControls
 
         public override void Init()
         {
-            Rect rect = ObjectRect;
+            Rect rect = this.ObjectRect;
             rect.Location = new Point(0, 600);
-            ObjectRect = rect;
-            counter = new Counter { Start = -200, Step = 1, End = 1280 };
-            IsEnabled = true;
+            this.ObjectRect = rect;
+            this.counter = new Counter { Start = -200, Step = 1, End = 1280 };
+            this.IsEnabled = true;
         }
 
         public override void Update()
         {
-            Rect rect = ObjectRect;
-            rect.X = Math.Round(counter.Value);
-            ObjectRect = rect;
-            State = string.Format("Координаты самолета: {0}", ObjectRect.Location);
+            Rect rect = this.ObjectRect;
+            rect.X = Math.Round(this.counter.Value);
+            this.ObjectRect = rect;
+            this.State = string.Format("Координаты самолета: {0}", this.ObjectRect.Location);
         }
     }
 }

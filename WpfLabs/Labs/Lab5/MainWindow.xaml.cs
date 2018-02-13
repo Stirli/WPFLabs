@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Controls;
-using System.Windows.Data;
+
 using Microsoft.Win32;
 
 namespace Lab5
@@ -20,45 +16,42 @@ namespace Lab5
     public partial class MainWindow : Window
     {
         private MainContext context;
+
         public MainWindow()
         {
-            InitializeComponent();
-            context = Resources["MainContext"] as MainContext;
+            this.InitializeComponent();
+            this.context = this.Resources["MainContext"] as MainContext;
         }
-
-
 
         private void SetBrushCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            BrushDialog bd = new BrushDialog { ResultData = context.ShapeData.Clone() };
-            if (bd.ShowDialog() == true)
-                context.ShapeData = bd.ResultData.Clone();
+            BrushDialog bd = new BrushDialog { ResultData = this.context.ShapeData.Clone() };
+            if (bd.ShowDialog() == true) this.context.ShapeData = bd.ResultData.Clone();
         }
 
         private void SaveAsCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            FileDialog fd = GetFileDialog<SaveFileDialog>();
+            FileDialog fd = this.GetFileDialog<SaveFileDialog>();
             if (fd.ShowDialog() == true)
             {
-                Save(fd.FileName);
+                this.Save(fd.FileName);
                 MessageBox.Show("Успех");
             }
         }
 
         private void SaveCommandBinding_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            e.CanExecute = context.CanSave;
+            e.CanExecute = this.context.CanSave;
         }
 
         private void OpenCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            FileDialog fd = GetFileDialog<OpenFileDialog>();
+            FileDialog fd = this.GetFileDialog<OpenFileDialog>();
             if (fd.ShowDialog() == true)
             {
-                Load(fd.FileName);
+                this.Load(fd.FileName);
             }
         }
-
 
         private void AboutCommandBinding_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
@@ -67,17 +60,17 @@ namespace Lab5
 
         public void Load(string path)
         {
-            context.Shapes.Clear();
+            this.context.Shapes.Clear();
             this.DrawCanvas.Children.Clear();
             IEnumerable<string> lines = File.ReadLines(path);
             foreach (string line in lines)
             {
                 ShapeData shapeData = (ShapeData)line;
-                context.Shapes.Add(shapeData);
-                this.DrawCanvas.Children.Add(MakePolygon(shapeData));
+                this.context.Shapes.Add(shapeData);
+                this.DrawCanvas.Children.Add(this.MakePolygon(shapeData));
             }
 
-            context.FileInfo = new FileInfo(path);
+            this.context.FileInfo = new FileInfo(path);
         }
 
         public void Save(string path)
@@ -90,32 +83,32 @@ namespace Lab5
                 }
             }
 
-            context.FileInfo = new FileInfo(path);
+            this.context.FileInfo = new FileInfo(path);
         }
+
         /**********************************************************************/
         #region Canvas events
+
         /**********************************************************************/
         private void DrawCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             Point position = e.GetPosition(sender as IInputElement);
-            context.ShapeData.Position = position;
+            this.context.ShapeData.Position = position;
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Point position = e.GetPosition(DrawCanvas);
+            Point position = e.GetPosition(this.DrawCanvas);
 
             ShapeData shape = this.context.ShapeData.Clone();
 
             shape.Position = position;
 
-            Polygon polygon = MakePolygon(shape);
+            Polygon polygon = this.MakePolygon(shape);
 
-            DrawCanvas.Children.Add(polygon);
+            this.DrawCanvas.Children.Add(polygon);
             this.context.Shapes.Add(shape);
         }
-
-
 
         private Polygon MakePolygon(ShapeData shape)
         {
@@ -145,10 +138,15 @@ namespace Lab5
 
         #endregion
 
-
-        private FileDialog GetFileDialog<T>() where T : FileDialog, new()
+        private FileDialog GetFileDialog<T>()
+            where T : FileDialog, new()
         {
-            return new T { InitialDirectory = context.FileInfo.DirectoryName, FileName = context.FileInfo.Name, Filter = "Файлы Vector Image Format (vif)|*.vif|Все файлы|*.*" };
+            return new T
+                       {
+                           InitialDirectory = this.context.FileInfo.DirectoryName,
+                           FileName = this.context.FileInfo.Name,
+                           Filter = "Файлы Vector Image Format (vif)|*.vif|Все файлы|*.*"
+                       };
         }
     }
 }
