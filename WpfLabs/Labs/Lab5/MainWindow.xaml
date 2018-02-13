@@ -11,19 +11,7 @@
             <Setter Property="Canvas.Left" Value="{Binding Position.X}"/>
             <Setter Property="Canvas.Top" Value="{Binding Position.Y}"/>
         </Style>
-        <DataTemplate x:Key="ShapeTemplate" DataType="lab5:ShapeData">
-            <Polygon Fill="{Binding Background}" Stroke="{Binding Border}" StrokeThickness="{Binding BorderWidth}" Stretch="Fill"  Width="60" Height="30">
-                <Polygon.Points>
-                    <Point X="00" Y="10"/>
-                    <Point X="40" Y="10"/>
-                    <Point X="40" Y="00"/>
-                    <Point X="50" Y="20"/>
-                    <Point X="40" Y="40"/>
-                    <Point X="40" Y="30"/>
-                    <Point X="00" Y="30"/>
-                </Polygon.Points>
-            </Polygon>
-        </DataTemplate>
+
     </Window.Resources>
     <Window.Title>
         <Binding Source="{StaticResource MainContext}" Path="FileInfo.Name" StringFormat="{}VPaint - {0}"></Binding>
@@ -46,7 +34,17 @@
             <MenuItem Command="Help"/>
         </Menu>
         <ToolBar DockPanel.Dock="Top" DataContext="{Binding Source={StaticResource MainContext},Path=ShapeData}">
-            <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource ShapeTemplate}"/>
+            <Polygon Fill="{Binding Background}" Stroke="{Binding Border}" StrokeThickness="{Binding BorderWidth}" Stretch="Fill" Width="120" Height="40">
+                <Polygon.Points>
+                    <Point X="00" Y="10"/>
+                    <Point X="0" Y="30"/>
+                    <Point X="100" Y="30"/>
+                    <Point X="100" Y="40"/>
+                    <Point X="120" Y="20"/>
+                    <Point X="100" Y="0"/>
+                    <Point X="100" Y="10"/>
+                </Polygon.Points>
+            </Polygon>
             <DockPanel>
                 <Label Content="Фон"/>
                 <Label Width="18" Height="18" Background="{Binding Background}" BorderBrush="Gray"  BorderThickness="1"/>
@@ -75,16 +73,7 @@
                 <TextBlock Text="{Binding Source={StaticResource MainContext},Path=ShapeData.Position,BindsDirectlyToSource=True}"></TextBlock>
             </StatusBarItem>
         </StatusBar>
-        <ListBox ItemsSource="{Binding}" DataContext="{Binding Source={StaticResource MainContext}, Path=Shapes}" Margin="5" 
-                MouseUp="Canvas_MouseUp"
-                MouseMove="DrawCanvas_MouseMove"
-                ItemContainerStyle="{StaticResource ItemStyle}"
-              ItemTemplate="{StaticResource ShapeTemplate}">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Canvas/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+        <Canvas Name="DrawCanvas" Background="White" Margin="6,23,6,6" MouseLeftButtonUp="Canvas_MouseUp" MouseMove="DrawCanvas_MouseMove">
+        </Canvas>
     </DockPanel>
 </Window>

@@ -40,7 +40,7 @@ namespace Lab5
             FileDialog fd = GetFileDialog<SaveFileDialog>();
             if (fd.ShowDialog() == true)
             {
-                context.Save(fd.FileName);
+                Save(fd.FileName);
                 MessageBox.Show("Успех");
             }
         }
@@ -55,7 +55,7 @@ namespace Lab5
             FileDialog fd = GetFileDialog<OpenFileDialog>();
             if (fd.ShowDialog() == true)
             {
-                context.Load(fd.FileName);
+                Load(fd.FileName);
             }
         }
 
@@ -65,6 +65,33 @@ namespace Lab5
             new About().ShowDialog();
         }
 
+        public void Load(string path)
+        {
+            context.Shapes.Clear();
+            this.DrawCanvas.Children.Clear();
+            IEnumerable<string> lines = File.ReadLines(path);
+            foreach (string line in lines)
+            {
+                ShapeData shapeData = (ShapeData)line;
+                context.Shapes.Add(shapeData);
+                this.DrawCanvas.Children.Add(MakePolygon(shapeData));
+            }
+
+            context.FileInfo = new FileInfo(path);
+        }
+
+        public void Save(string path)
+        {
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                foreach (ShapeData shape in this.context.Shapes)
+                {
+                    sw.WriteLine(shape.ToString());
+                }
+            }
+
+            context.FileInfo = new FileInfo(path);
+        }
         /**********************************************************************/
         #region Canvas events
         /**********************************************************************/
@@ -76,10 +103,44 @@ namespace Lab5
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                context.AddShape();
-            }
+            Point position = e.GetPosition(DrawCanvas);
+
+            ShapeData shape = this.context.ShapeData.Clone();
+
+            shape.Position = position;
+
+            Polygon polygon = MakePolygon(shape);
+
+            DrawCanvas.Children.Add(polygon);
+            this.context.Shapes.Add(shape);
+        }
+
+
+
+        private Polygon MakePolygon(ShapeData shape)
+        {
+            Polygon polygon = new Polygon
+                                  {
+                                      Fill = shape.Background,
+                                      Stroke = shape.Border,
+                                      StrokeThickness = shape.BorderWidth,
+                                      Points = new PointCollection
+                                                   {
+                                                       new Point(0, 10),
+                                                       new Point(0, 30),
+                                                       new Point(100, 30),
+                                                       new Point(100, 40),
+                                                       new Point(120, 20),
+                                                       new Point(100, 0),
+                                                       new Point(100, 10)
+                                                   }
+                                  };
+
+            polygon.SetValue(Canvas.LeftProperty, shape.Position.X);
+
+            polygon.SetValue(Canvas.TopProperty, shape.Position.Y);
+
+            return polygon;
         }
 
         #endregion

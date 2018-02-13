@@ -61,26 +61,7 @@ namespace Lab5
         {
             Shapes.Add(ShapeData.Clone());
         }
-
-
-
-        public void Load(string path)
-        {
-            Shapes.Clear();
-            IEnumerable<string> lines = File.ReadLines(path);
-            foreach (string line in lines)
-            {
-                ShapeData shapeData = (ShapeData)line;
-                Shapes.Add(shapeData);
-            }
-            FileInfo = new FileInfo(path);
-        }
-        public void Save(string path)
-        {
-            File.WriteAllLines(path, Shapes.ToList().ConvertAll(input => input.ToString()));
-            FileInfo = new FileInfo(path);
-        }
-
+        
         public bool CanSave
         {
             get
