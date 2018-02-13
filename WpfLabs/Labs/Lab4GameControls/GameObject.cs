@@ -1,70 +1,95 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Imaging;
+using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
-    class GameObject : UserControl
+    public class GameObject : INotifyPropertyChanged
     {
+        private Rect _objectRect;
+        private string _state;
+        private bool _isEnabled;
+        private BitmapSource _image;
+
         public GameObject()
         {
-            Image image = new Image(){Stretch = Stretch.Fill};
-            image.SetBinding(Image.SourceProperty, new Binding("Sprite") { Source = this });
-            this.Content = image;
-            this.VerticalContentAlignment = VerticalAlignment.Stretch;
-            this.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            SetBinding(Canvas.LeftProperty, new Binding("Left") { Source = this });
-            SetBinding(Canvas.TopProperty, new Binding("Top") { Source = this });
-            SizeChanged += (sender, args) =>
-                Margin = new Thickness(-args.NewSize.Width / 2, -args.NewSize.Height / 2, 0, 0);
+            IsEnabled = true;
         }
 
+        public bool IsActive { get; set; }
 
-
-        public double Left
+        public Rect ObjectRect
         {
-            get { return (double)GetValue(LeftProperty); }
-            set { SetValue(LeftProperty, value); }
+            get { return _objectRect; }
+            set
+            {
+                if (value.Equals(_objectRect)) return;
+                _objectRect = value;
+                OnPropertyChanged("ObjectRect");
+            }
         }
 
-        // Using a DependencyProperty as the backing store for Left.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty LeftProperty =
-            DependencyProperty.Register("Left", typeof(double), typeof(GameObject), new UIPropertyMetadata(0.0));
-
-
-
-        public double Top
+        public BitmapSource Image
         {
-            get { return (double)GetValue(TopProperty); }
-            set { SetValue(TopProperty, value); }
+            get { return _image; }
+            set
+            {
+                if (Equals(value, _image)) return;
+                _image = value;
+                OnPropertyChanged("Image");
+            }
         }
 
-        // Using a DependencyProperty as the backing store for Top.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TopProperty =
-            DependencyProperty.Register("Top", typeof(double), typeof(GameObject), new UIPropertyMetadata(0.0));
-
-
-
-        public BitmapSource Sprite
+        public string State
         {
-            get { return (BitmapSource)GetValue(MyPropertyProperty); }
-            set { SetValue(MyPropertyProperty, value); }
+            get { return _state; }
+            protected set
+            {
+                if (value == _state) return;
+                _state = value;
+                OnPropertyChanged("State");
+            }
         }
 
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyPropertyProperty =
-            DependencyProperty.Register("Sprite", typeof(BitmapSource), typeof(GameObject), new UIPropertyMetadata(null));
-
-        public void Destroy()
+        public bool IsEnabled
         {
-            Visibility = Visibility.Collapsed;
+            get
+            {
+                return _isEnabled;
+            }
+
+            set
+            {
+                if (value == _isEnabled) return;
+                _isEnabled = value;
+                OnPropertyChanged("IsEnabled");
+            }
         }
+
+        public virtual void Init() { }
+        public virtual void Update() { }
+        public virtual void Destroy()
+        {
+            Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
+        }
+
+
+        #region реализация INotifyPrepertyChanged 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
     }
 }
