@@ -7,6 +7,11 @@ namespace Lab4GameControls
 {
     class Counter
     {
+        public Counter()
+        {
+            Step = 1;
+            End = Double.MaxValue;
+        }
         private double _value;
         public double Start { get; set; }
         public double Step { get; set; }
@@ -16,14 +21,15 @@ namespace Lab4GameControls
         {
             get
             {
-                double d = this._value += this.Step;
-                if (d >= this.End)
+                double d = _value += Step;
+                if (d >= End)
                 {
-                    d = this._value = this.Start;
+                    d = _value = Start;
                 }
 
                 return d;
             }
+            set { _value = value; }
         }
     }
 }

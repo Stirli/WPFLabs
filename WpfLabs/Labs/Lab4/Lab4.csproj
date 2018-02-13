@@ -66,6 +66,7 @@
     </Compile>
     <Compile Include="Bomber.cs" />
     <Compile Include="ContextGameObj.cs" />
+    <Compile Include="GameObjectControl.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

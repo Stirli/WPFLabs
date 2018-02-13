@@ -53,14 +53,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Compile Include="Bomb.cs" />
+    <Compile Include="Bomber.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="GameCommands.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="GameControl.xaml.cs">
       <DependentUpon>GameControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameObjectControl.cs" />
-    <Compile Include="GameObjectContext.cs" />
+    <Compile Include="Panzer.cs" />
     <Compile Include="Scene.cs" />
     <Compile Include="Properties\Annotations.cs" />
   </ItemGroup>

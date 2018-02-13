@@ -17,21 +17,21 @@ namespace Lab4GameControls
         {
             Image image = new Image(){Stretch = Stretch.Fill};
             image.SetBinding(Image.SourceProperty, new Binding("Sprite") { Source = this });
-            this.Content = image;
-            this.VerticalContentAlignment = VerticalAlignment.Stretch;
-            this.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            this.SetBinding(Canvas.LeftProperty, new Binding("Left") { Source = this });
-            this.SetBinding(Canvas.TopProperty, new Binding("Top") { Source = this });
-            this.SizeChanged += (sender, args) => this.Margin = new Thickness(-args.NewSize.Width / 2, -args.NewSize.Height / 2, 0, 0);
+            Content = image;
+            VerticalContentAlignment = VerticalAlignment.Stretch;
+            HorizontalContentAlignment = HorizontalAlignment.Stretch;
+            SetBinding(Canvas.LeftProperty, new Binding("Left") { Source = this });
+            SetBinding(Canvas.TopProperty, new Binding("Top") { Source = this });
+            SizeChanged += (sender, args) => Margin = new Thickness(-args.NewSize.Width / 2, -args.NewSize.Height / 2, 0, 0);
         }
 
 
 
         public double Left
         {
-            get { return (double)this.GetValue(LeftProperty); }
+            get { return (double)GetValue(LeftProperty); }
             set {
-                this.SetValue(LeftProperty, value); }
+                SetValue(LeftProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Left.  This enables animation, styling, binding, etc...
@@ -42,9 +42,9 @@ namespace Lab4GameControls
 
         public double Top
         {
-            get { return (double)this.GetValue(TopProperty); }
+            get { return (double)GetValue(TopProperty); }
             set {
-                this.SetValue(TopProperty, value); }
+                SetValue(TopProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for Top.  This enables animation, styling, binding, etc...
@@ -55,9 +55,9 @@ namespace Lab4GameControls
 
         public BitmapSource Sprite
         {
-            get { return (BitmapSource)this.GetValue(MyPropertyProperty); }
+            get { return (BitmapSource)GetValue(MyPropertyProperty); }
             set {
-                this.SetValue(MyPropertyProperty, value); }
+                SetValue(MyPropertyProperty, value); }
         }
 
         // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
@@ -66,7 +66,7 @@ namespace Lab4GameControls
 
         public void Destroy()
         {
-            this.Visibility = Visibility.Collapsed;
+            Visibility = Visibility.Collapsed;
         }
     }
 }

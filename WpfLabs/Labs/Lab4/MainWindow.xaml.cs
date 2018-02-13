@@ -16,7 +16,7 @@ namespace Lab4
     {
         public MainWindow()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ListBox_OnLoaded(object sender, RoutedEventArgs e)
@@ -30,7 +30,7 @@ namespace Lab4
             var bomberImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomber.png", UriKind.RelativeOrAbsolute));
             var bumImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
             var bombImg = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4;component/Assets/bomb.png", UriKind.RelativeOrAbsolute));
-            Context context = new Context(this.ListBox.RenderSize);
+            Context context = new Context(ListBox.RenderSize);
             Log.Write = (str) =>
             {
                 try
@@ -43,15 +43,15 @@ namespace Lab4
                 }
                 };
             StaticObject ground = new StaticObject();
-            context.CreateGameObject(ground, this.Dispatcher);
-            ground.Rectangle = new Rect(0, 0, this.ListBox.RenderSize.Width, 49);
+            context.CreateGameObject(ground, Dispatcher);
+            ground.Rectangle = new Rect(0, 0, ListBox.RenderSize.Width, 49);
             Bomber bomber = new Bomber
             {
                 Image = bomberImg,
                 Rectangle = new Rect(50, 500, 200, 100),
                 Name = "Самолет"
             };
-            context.CreateGameObject(bomber, this.Dispatcher);
+            context.CreateGameObject(bomber, Dispatcher);
             Panzer panzer = new Panzer
             {
                 Images = new[] { targetImg, bumImg },
@@ -59,7 +59,7 @@ namespace Lab4
                 Rectangle = new Rect(700, 50, 200, 150),
                 Name = "Танк"
             };
-            context.CreateGameObject(panzer, this.Dispatcher);
+            context.CreateGameObject(panzer, Dispatcher);
             Timer t = new Timer(10);
             t.Elapsed += (s, args) =>
             {
@@ -84,7 +84,7 @@ namespace Lab4
                         var item2 = list[j];
                         if (item.Rectangle.IntersectsWith(item2.Rectangle))
                         {
-                            this.Dispatcher.Invoke(new Action(() =>
+                            Dispatcher.Invoke(new Action(() =>
                                 {
                                     item.OnColision(item2);
                                     item2.OnColision(item);
@@ -94,7 +94,7 @@ namespace Lab4
                 }
             };
 
-            this.shoot = () =>
+            shoot = () =>
             {
                 Point point = bomber.Rectangle.TopLeft;
                 point.Offset(50, -100);
@@ -105,13 +105,13 @@ namespace Lab4
                     Rectangle = new Rect(point, new Size(30, 30)),
                     Name = "Бомба"
                 };
-                context.CreateGameObject(bomb, this.Dispatcher);
+                context.CreateGameObject(bomb, Dispatcher);
             };
 
             t.Start();
 
             context.Log = new ObservableCollection<string>();
-            this.DataContext = context;
+            DataContext = context;
         }
 
         private Action shoot;

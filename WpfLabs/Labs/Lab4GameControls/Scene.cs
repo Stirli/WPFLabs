@@ -1,122 +1,109 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
-    using System.ComponentModel;
-
-    using Lab4GameControls.Annotations;
-
     internal class Scene : INotifyPropertyChanged, IDisposable
     {
-        private Timer t;
+        private Timer _t;
+        private Bomb _bomb;
 
-        private Panzer panzer;
+        public Panzer Panzer { get; set; }
 
-        private Bomb bomb;
-
-        private Bomber bomber;
-
-        public Panzer Panzer
-        {
-            get
-            {
-                return this.panzer;
-            }
-
-            set
-            {
-                if (Equals(value, this.panzer)) return;
-                this.panzer = value;
-                this.OnPropertyChanged("Panzer");
-            }
-        }
-
-        public Bomber Bomber
-        {
-            get
-            {
-                return this.bomber;
-            }
-
-            set
-            {
-                if (Equals(value, this.bomber)) return;
-                this.bomber = value;
-                this.OnPropertyChanged("Bomber");
-            }
-        }
+        public Bomber Bomber { get; set; }
 
         public Bomb Bomb
         {
-            get
-            {
-                return this.bomb;
-            }
-
+            get { return _bomb; }
             set
             {
-                if (Equals(value, this.bomb)) return;
-                this.bomb = value;
-                this.OnPropertyChanged("Bomb");
+                if (Equals(value, _bomb)) return;
+                _bomb = value;
+                OnPropertyChanged("Bomb");
             }
         }
 
         public bool IsBuisy { get; set; }
+        public Action OnWin { get; set; }
+        public Action OnGameOver { get; set; }
 
         public void Init()
         {
-            Rect objectRect = this.Panzer.ObjectRect;
-            objectRect.Location = new Point(600, 50);
-            this.Panzer.ObjectRect = objectRect;
-
-            Rect rect = this.Bomber.ObjectRect;
-            rect.Location = new Point(0, 600);
-            this.Bomber.ObjectRect = rect;
-
-            this.Bomb = new Bomb();
+            Panzer.Init();
+            Bomber.Init();
         }
 
         public void Start()
         {
-            if (!this.IsBuisy)
-            {
-                this.t = new Timer(
-                    state =>
-                    {
-                        this.Panzer.Update();
-                        this.Bomber.Update();
-                        this.Bomb.Update();
-                        if (this.Bomb.ObjectRect.IntersectsWith(this.Panzer.ObjectRect))
-                        {
-                            this.Bomb.IsEnabled = false;
-                            this.Panzer.IsEnabled = false;
-                            this.Stop();
-                        }
-                    },
-                    null,
-                    0,
-                    10);
+            if (IsBuisy) return;
+            Counter c = new Counter();
+            _t = new Timer(
+                state =>
+                {
+                    Bomber.Update();
 
-                this.IsBuisy = true;
-            }
+                    if (!Bomb.IsEnabled) return;
+                    Bomb.Update();
+                    if (Bomb.ObjectRect.IntersectsWith(Panzer.ObjectRect))
+                    {
+                        if (Bomb.IsActive)
+                        {
+                            Bomb.IsActive = false;
+                            Bomb.Destroy();
+                            Panzer.Destroy();
+                        }
+                        if (c.Value >= 50)
+                        {
+                            Bomb.IsEnabled = false;
+                            Panzer.IsEnabled = false;
+                            OnWin();
+                            Pause();
+                            Init();
+                        }
+                    }
+                    else
+                        if (Bomb.ObjectRect.Y < 0)
+                        {
+                            if (Bomb.IsActive)
+                            {
+                                Bomb.IsActive = false;
+                                Bomb.Destroy();
+                            }
+
+                            if (c.Value >= 50)
+                            {
+                                Bomb.IsEnabled = false;
+                                OnGameOver();
+                                c.Value = 0;
+                            }
+                        }
+                },
+                null,
+                0,
+                10);
+
+            IsBuisy = true;
         }
 
-        public void Stop()
+        public void Pause()
         {
-            if (this.IsBuisy)
+            if (IsBuisy)
             {
-                this.t.Dispose();
-                this.IsBuisy = false;
+                _t.Dispose();
+                IsBuisy = false;
             }
         }
 
         public void Dispose()
         {
-            if (this.t != null)
+            if (_t != null)
             {
-                this.t.Dispose();
+                _t.Dispose();
             }
         }
 
@@ -125,7 +112,7 @@ namespace Lab4GameControls
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = this.PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }

@@ -106,7 +106,7 @@ namespace Lab4GameControls.Annotations
     /// </param>
     public StringFormatMethodAttribute([NotNull] string formatParameterName)
     {
-        this.FormatParameterName = formatParameterName;
+        FormatParameterName = formatParameterName;
     }
 
     [NotNull] public string FormatParameterName { get; private set; }
@@ -123,7 +123,7 @@ namespace Lab4GameControls.Annotations
   {
     public ValueProviderAttribute([NotNull] string name)
     {
-        this.Name = name;
+        Name = name;
     }
 
     [NotNull] public string Name { get; private set; }
@@ -187,7 +187,7 @@ namespace Lab4GameControls.Annotations
     public NotifyPropertyChangedInvocatorAttribute() { }
     public NotifyPropertyChangedInvocatorAttribute([NotNull] string parameterName)
     {
-        this.ParameterName = parameterName;
+        ParameterName = parameterName;
     }
 
     [CanBeNull] public string ParameterName { get; private set; }
@@ -245,8 +245,8 @@ namespace Lab4GameControls.Annotations
 
     public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
     {
-        this.Contract = contract;
-        this.ForceFullStates = forceFullStates;
+        Contract = contract;
+        ForceFullStates = forceFullStates;
     }
 
     [NotNull] public string Contract { get; private set; }
@@ -270,7 +270,7 @@ namespace Lab4GameControls.Annotations
 
     public LocalizationRequiredAttribute(bool required)
     {
-        this.Required = required;
+        Required = required;
     }
 
     public bool Required { get; private set; }
@@ -316,7 +316,7 @@ namespace Lab4GameControls.Annotations
   {
     public BaseTypeRequiredAttribute([NotNull] Type baseType)
     {
-        this.BaseType = baseType;
+        BaseType = baseType;
     }
 
     [NotNull] public Type BaseType { get; private set; }
@@ -340,8 +340,8 @@ namespace Lab4GameControls.Annotations
 
     public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
     {
-        this.UseKindFlags = useKindFlags;
-        this.TargetFlags = targetFlags;
+        UseKindFlags = useKindFlags;
+        TargetFlags = targetFlags;
     }
 
     public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -367,8 +367,8 @@ namespace Lab4GameControls.Annotations
 
     public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
     {
-        this.UseKindFlags = useKindFlags;
-        this.TargetFlags = targetFlags;
+        UseKindFlags = useKindFlags;
+        TargetFlags = targetFlags;
     }
 
     [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -425,7 +425,7 @@ namespace Lab4GameControls.Annotations
 
     public PublicAPIAttribute([NotNull] string comment)
     {
-        this.Comment = comment;
+        Comment = comment;
     }
 
     [CanBeNull] public string Comment { get; private set; }
@@ -463,7 +463,7 @@ namespace Lab4GameControls.Annotations
 
     public MustUseReturnValueAttribute([NotNull] string justification)
     {
-        this.Justification = justification;
+        Justification = justification;
     }
 
     [CanBeNull] public string Justification { get; private set; }
@@ -500,7 +500,7 @@ namespace Lab4GameControls.Annotations
 
     public PathReferenceAttribute([NotNull, PathReference] string basePath)
     {
-        this.BasePath = basePath;
+        BasePath = basePath;
     }
 
     [CanBeNull] public string BasePath { get; private set; }
@@ -591,7 +591,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcAreaMasterLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -602,7 +602,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcAreaPartialViewLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -613,7 +613,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcAreaViewLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -624,7 +624,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcMasterLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -635,7 +635,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcPartialViewLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -646,7 +646,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspMvcViewLocationFormatAttribute([NotNull] string format)
     {
-        this.Format = format;
+        Format = format;
     }
 
     [NotNull] public string Format { get; private set; }
@@ -665,7 +665,7 @@ namespace Lab4GameControls.Annotations
 
     public AspMvcActionAttribute([NotNull] string anonymousProperty)
     {
-        this.AnonymousProperty = anonymousProperty;
+        AnonymousProperty = anonymousProperty;
     }
 
     [CanBeNull] public string AnonymousProperty { get; private set; }
@@ -683,7 +683,7 @@ namespace Lab4GameControls.Annotations
 
     public AspMvcAreaAttribute([NotNull] string anonymousProperty)
     {
-        this.AnonymousProperty = anonymousProperty;
+        AnonymousProperty = anonymousProperty;
     }
 
     [CanBeNull] public string AnonymousProperty { get; private set; }
@@ -702,7 +702,7 @@ namespace Lab4GameControls.Annotations
 
     public AspMvcControllerAttribute([NotNull] string anonymousProperty)
     {
-        this.AnonymousProperty = anonymousProperty;
+        AnonymousProperty = anonymousProperty;
     }
 
     [CanBeNull] public string AnonymousProperty { get; private set; }
@@ -805,7 +805,7 @@ namespace Lab4GameControls.Annotations
 
     public HtmlElementAttributesAttribute([NotNull] string name)
     {
-        this.Name = name;
+        Name = name;
     }
 
     [CanBeNull] public string Name { get; private set; }
@@ -816,7 +816,7 @@ namespace Lab4GameControls.Annotations
   {
     public HtmlAttributeValueAttribute([NotNull] string name)
     {
-        this.Name = name;
+        Name = name;
     }
 
     [NotNull] public string Name { get; private set; }
@@ -839,7 +839,7 @@ namespace Lab4GameControls.Annotations
   {
     public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
     {
-        this.CollectionAccessType = collectionAccessType;
+        CollectionAccessType = collectionAccessType;
     }
 
     public CollectionAccessType CollectionAccessType { get; private set; }
@@ -879,7 +879,7 @@ namespace Lab4GameControls.Annotations
   {
     public AssertionConditionAttribute(AssertionConditionType conditionType)
     {
-        this.ConditionType = conditionType;
+        ConditionType = conditionType;
     }
 
     public AssertionConditionType ConditionType { get; private set; }
@@ -966,8 +966,8 @@ namespace Lab4GameControls.Annotations
   {
     public AspChildControlTypeAttribute([NotNull] string tagName, [NotNull] Type controlType)
     {
-        this.TagName = tagName;
-        this.ControlType = controlType;
+        TagName = tagName;
+        ControlType = controlType;
     }
 
     [NotNull] public string TagName { get; private set; }
@@ -989,7 +989,7 @@ namespace Lab4GameControls.Annotations
   {
     public AspRequiredAttributeAttribute([NotNull] string attribute)
     {
-        this.Attribute = attribute;
+        Attribute = attribute;
     }
 
     [NotNull] public string Attribute { get; private set; }
@@ -1002,7 +1002,7 @@ namespace Lab4GameControls.Annotations
 
     public AspTypePropertyAttribute(bool createConstructorReferences)
     {
-        this.CreateConstructorReferences = createConstructorReferences;
+        CreateConstructorReferences = createConstructorReferences;
     }
   }
 
@@ -1011,7 +1011,7 @@ namespace Lab4GameControls.Annotations
   {
     public RazorImportNamespaceAttribute([NotNull] string name)
     {
-        this.Name = name;
+        Name = name;
     }
 
     [NotNull] public string Name { get; private set; }
@@ -1022,8 +1022,8 @@ namespace Lab4GameControls.Annotations
   {
     public RazorInjectionAttribute([NotNull] string type, [NotNull] string fieldName)
     {
-        this.Type = type;
-        this.FieldName = fieldName;
+        Type = type;
+        FieldName = fieldName;
     }
 
     [NotNull] public string Type { get; private set; }
@@ -1036,7 +1036,7 @@ namespace Lab4GameControls.Annotations
   {
     public RazorDirectiveAttribute([NotNull] string directive)
     {
-        this.Directive = directive;
+        Directive = directive;
     }
 
     [NotNull] public string Directive { get; private set; }
@@ -1047,13 +1047,13 @@ namespace Lab4GameControls.Annotations
   {
       public RazorPageBaseTypeAttribute([NotNull] string baseType)
       {
-          this.BaseType = baseType;
+          BaseType = baseType;
       }
 
       public RazorPageBaseTypeAttribute([NotNull] string baseType, string pageName)
       {
-          this.BaseType = baseType;
-          this.PageName = pageName;
+          BaseType = baseType;
+          PageName = pageName;
       }
 
       [NotNull] public string BaseType { get; private set; }

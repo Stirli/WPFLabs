@@ -4,41 +4,55 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media.Imaging;
 using Lab4GameControls.Annotations;
 
 namespace Lab4GameControls
 {
-    class GameObject : INotifyPropertyChanged
+    public class GameObject : INotifyPropertyChanged
     {
-        private Rect objectRect;
+        private Rect _objectRect;
         private string _state;
+        private bool _isEnabled;
+        private BitmapSource _image;
 
         public GameObject()
         {
-            this.IsEnabled = true;
+            IsEnabled = true;
         }
 
-        private bool isEnabled;
+        public bool IsActive { get; set; }
 
         public Rect ObjectRect
         {
-            get { return this.objectRect; }
+            get { return _objectRect; }
             set
             {
-                if (value.Equals(this.objectRect)) return;
-                this.objectRect = value;
-                this.OnPropertyChanged("ObjectRect");
+                if (value.Equals(_objectRect)) return;
+                _objectRect = value;
+                OnPropertyChanged("ObjectRect");
+            }
+        }
+
+        public BitmapSource Image
+        {
+            get { return _image; }
+            set
+            {
+                if (Equals(value, _image)) return;
+                _image = value;
+                OnPropertyChanged("Image");
             }
         }
 
         public string State
         {
-            get { return this._state; }
+            get { return _state; }
             protected set
             {
-                if (value == this._state) return;
-                this._state = value;
-                this.OnPropertyChanged("State");
+                if (value == _state) return;
+                _state = value;
+                OnPropertyChanged("State");
             }
         }
 
@@ -46,73 +60,36 @@ namespace Lab4GameControls
         {
             get
             {
-                return this.isEnabled;
+                return _isEnabled;
             }
 
             set
             {
-                if (value == this.isEnabled) return;
-                this.isEnabled = value;
-                this.OnPropertyChanged("IsEnabled");
+                if (value == _isEnabled) return;
+                _isEnabled = value;
+                OnPropertyChanged("IsEnabled");
             }
         }
 
+        public virtual void Init() { }
         public virtual void Update() { }
+        public virtual void Destroy()
+        {
+            Image = BitmapFrame.Create(new Uri("pack://application:,,,/Lab4GameControls;component/Assets/bum.png", UriKind.RelativeOrAbsolute));
+        }
+
+
+        #region реализация INotifyPrepertyChanged 
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged(string propertyName)
         {
-            var handler = this.PropertyChanged;
+            var handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
-    }
 
-    class Panzer : GameObject
-    {
-        private string _state;
-
-        Counter c = new Counter { Step = .02, End = Math.PI * 2 };
-
-        public override void Update()
-        {
-            if (this.IsEnabled)
-            {
-                Rect rect = this.ObjectRect;
-                rect.X += Math.Sin(this.c.Value) * 4;
-                this.ObjectRect = rect;
-            }
-        }
-    }
-
-    class Bomber : GameObject
-    {
-        private Counter c;
-
-        public Bomber()
-        {
-            this.c = new Counter { Start = -200, Step = 2, End = 1280 };
-        }
-
-        public override void Update()
-        {
-            Rect rect = this.ObjectRect;
-            rect.X = Math.Round(this.c.Value);
-            this.ObjectRect = rect;
-        }
-    }
-
-    class Bomb : GameObject
-    {
-
-        public override void Update()
-        {
-            if (this.IsEnabled)
-            {
-                Rect rect = this.ObjectRect;
-                rect.Y -= 2;
-                this.ObjectRect = rect;
-            }
-        }
+        #endregion
     }
 }

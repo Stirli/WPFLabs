@@ -11,7 +11,8 @@
     </UserControl.Resources>
     <UserControl.CommandBindings>
         <CommandBinding Command="lgc:GameCommands.Start" Executed="StartCommandBinding_OnExecuted" CanExecute="StartCommandBinding_OnCanExecute"/>
-        <CommandBinding Command="lgc:GameCommands.Reset" Executed="StopCommandBinding_OnExecuted" CanExecute="StopCommandBinding_OnCanExecute"/>
+        <CommandBinding Command="lgc:GameCommands.Pause" Executed="PauseCommandBinding_OnExecuted" CanExecute="PauseCommandBinding_OnCanExecute"/>
+        <CommandBinding Command="lgc:GameCommands.Reset" Executed="ResetCommandBinding_OnExecuted" CanExecute="ResetCommandBinding_OnCanExecute"/>
         <CommandBinding Command="lgc:GameCommands.Fire" Executed="FireCommandBinding_OnExecuted" CanExecute="FireCommandBinding_OnCanExecute"/>
     </UserControl.CommandBindings>
     <Grid>
@@ -50,9 +51,9 @@
                     </Setter>
                 </Style>
             </Canvas.Resources>
-            <Image Name="BomberVisual" Source="/Lab4GameControls;component/Assets/bomber.png" DataContext="{Binding Path=Bomber}"/>
-            <Image Name="TargetVisual" Source="/Lab4GameControls;component/Assets/target.png" DataContext="{Binding Path=Panzer}"/>
-            <Image Name="BombVisual" Source="/Lab4GameControls;component/Assets/bomb.png" DataContext="{Binding Path=Bomb}"/>
+            <Image MouseLeftButtonUp="Element_OnMouseLeftButtonUp" Source="/Lab4GameControls;component/Assets/bomber.png" DataContext="{Binding Path=Bomber}"/>
+            <Image DataContext="{Binding Path=Panzer}"/>
+            <Image MouseLeftButtonUp="Element_OnMouseLeftButtonUp" DataContext="{Binding Path=Bomb}"/>
         </Canvas>
     </Grid>
 </UserControl>
